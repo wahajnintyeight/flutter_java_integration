@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-void main() => runApp(chooseWidget(window.defaultRouteName));
+void main() => runApp(chooseWidget('splashRoute'));
 
 Widget chooseWidget(String route) {
   switch (route) {
@@ -11,7 +11,9 @@ Widget chooseWidget(String route) {
 
     default:
       return Center(
-        child: Text('Unknown'),
+        child: Text('Unknown',
+          textDirection: TextDirection.ltr,
+        ),
       );
   }
 }
