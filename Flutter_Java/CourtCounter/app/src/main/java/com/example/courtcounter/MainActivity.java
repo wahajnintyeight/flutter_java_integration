@@ -39,8 +39,8 @@ CustomArFragment customerArFragment = (CustomArFragment) getSupportFragmentManag
 ModelRenderable.builder()
         .setSource(this,R.raw.fox_face)
         .build()
-        .thenAccept(renderable ->{
-            modelRenderable = renderable;
+        .thenAccept(renderable1 ->{
+            modelRenderable = renderable1;
             modelRenderable.setShadowCaster(false);
             modelRenderable.setShadowReceiver(false);
         } );

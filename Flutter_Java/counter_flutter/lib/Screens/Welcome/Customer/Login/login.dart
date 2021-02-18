@@ -1,37 +1,37 @@
 import 'dart:ui';
-import 'package:counter_flutter/Screens/Welcome/welcome.dart';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:counter_flutter/Screens/Welcome/welcome.dart';
 void main() => runApp(chooseWidget('splashRoute'));
 
 Widget chooseWidget(String route) {
   switch (route) {
-  // name of the route defined in the host app
+    // name of the route defined in the host app
     case 'splashRoute':
-      return MyFlutterActivity();
+      return CusLogin();
 
     default:
       return Center(
-        child: Text('Unknown',
+        child: Text(
+          'Unknown',
           textDirection: TextDirection.ltr,
         ),
       );
   }
 }
 
-
-
-
-class MyFlutterActivity extends StatefulWidget {
+class CusLogin extends StatefulWidget {
   @override
-  _MyFlutterActivityState createState() => _MyFlutterActivityState();
+  _CusLoginState createState() => _CusLoginState();
 }
 
-class _MyFlutterActivityState extends State<MyFlutterActivity> {
+class _CusLoginState extends State<CusLogin> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Welcome(),
+      home: SplashScreen(),
     );
   }
 }
@@ -42,12 +42,12 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
           title: Text('Sample App'),
@@ -132,5 +132,6 @@ class _SplashScreenState extends State<SplashScreen> {
                     ))
               ],
             )));
+
   }
 }
