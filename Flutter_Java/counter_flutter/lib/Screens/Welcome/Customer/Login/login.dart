@@ -1,8 +1,10 @@
 import 'dart:ui';
 
+import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
+
 void main() => runApp(chooseWidget('splashRoute'));
 
 Widget chooseWidget(String route) {
@@ -50,22 +52,31 @@ class _SplashScreenState extends State<SplashScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
-          title: Text('Sample App'),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () =>
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return CusWelcome();
+            })),
+          ),
+          title: Text("Shop 'N' Preview"),
+          centerTitle: true,
         ),
         body: Padding(
             padding: EdgeInsets.all(10),
             child: ListView(
               children: <Widget>[
-                Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      "Shop 'N' Preview",
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 30),
-                    )),
+                SizedBox(height: size.height * 0.05),
+                // Container(
+                //     alignment: Alignment.center,
+                //     padding: EdgeInsets.all(10),
+                //     child: Text(
+                //       "Shop 'N' Preview",
+                //       style: TextStyle(
+                //           color: Colors.blue,
+                //           fontWeight: FontWeight.w500,
+                //           fontSize: 30),
+                //     )),
                 Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.all(10),
@@ -95,7 +106,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                 ),
                 FlatButton(
-                  onPressed: (){
+                  onPressed: () {
                     //forgot password screen
                   },
                   textColor: Colors.blue,
@@ -115,23 +126,22 @@ class _SplashScreenState extends State<SplashScreen> {
                     )),
                 Container(
                     child: Row(
-                      children: <Widget>[
-                        Text('Does not have account?'),
-                        FlatButton(
-                          textColor: Colors.blue,
-                          child: Text(
-                            'Sign Up',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          onPressed: () {
-                            //signup screen
-                          },
-                        )
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.center,
-                    ))
+                  children: <Widget>[
+                    Text('Does not have account?'),
+                    FlatButton(
+                      textColor: Colors.blue,
+                      child: Text(
+                        'Sign Up',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      onPressed: () {
+                        //signup screen
+                      },
+                    )
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ))
               ],
             )));
-
   }
 }

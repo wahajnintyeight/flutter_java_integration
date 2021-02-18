@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
+import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
+
 void main() => runApp(chooseWidget('splashRoute'));
 
 Widget chooseWidget(String route) {
@@ -49,87 +51,92 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () =>
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return CusWelcome();
+            })),
+          ),
+          title: Text("Shop 'N' Preview"),
+          centerTitle: true,
+        ),
         body: Padding(
             padding: EdgeInsets.all(10),
             child: ListView(
               children: <Widget>[
                 SizedBox(height: size.height * 0.05),
+                // Container(
+                //     alignment: Alignment.center,
+                //     padding: EdgeInsets.all(10),
+                //     child: Text(
+                //       "Shop 'N' Preview",
+                //       style: TextStyle(
+                //           color: Colors.blue,
+                //           fontWeight: FontWeight.w500,
+                //           fontSize: 30),
+                //     )),
                 Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.all(10),
                     child: Text(
-                      "Shop 'N' Preview",
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 30),
+                      'Sign Up',
+                      style: TextStyle(fontSize: 20),
                     )),
                 Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Customer',
-                    style: TextStyle(
-                        color: Colors.black45,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20),
+                  padding: EdgeInsets.all(10),
+                  child: TextField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      filled:true,
+                    fillColor: Colors.white12,
+                      border: OutlineInputBorder(),
+                      labelText: 'User Name',
+                    ),
                   ),
                 ),
-                SizedBox(height: size.height * 0.20),
-                // SizedBox(height: size.height * 0.05),
                 Container(
-                    height: 90,
+                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  child: TextField(
+                    obscureText: true,
+                    controller: passwordController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Password',
+                    ),
+                  ),
+                ),
+
+                Container(
+                    height: 50,
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: RaisedButton(
                       textColor: Colors.white,
                       color: Colors.blue,
-                      child: Text('Login'),
+                      child: Text('Sign Up'),
                       onPressed: () {
                         print(nameController.text);
                         print(passwordController.text);
                       },
                     )),
-                SizedBox(height: size.height * 0.05),
                 Container(
-                    height: 90,
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.blue,
-                      child: Text('Register'),
-                      onPressed: () {
-                        print(nameController.text);
-                        print(passwordController.text);
-                      },
-                    )),
-                SizedBox(height: size.height * 0.05),
-                Container(
-                    height: 90,
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: RaisedButton(
-                      elevation: 0,
-                      hoverElevation: 0,
-                      focusElevation: 0,
-                      highlightElevation: 0,
-                      textColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.zero,
-                        side: BorderSide(color: Colors.blue, width: 4),
-                      ),
-                      color: Colors.white,
+                    child: Row(
+                  children: <Widget>[
+                    Text('Does not have account?'),
+                    FlatButton(
+                      textColor: Colors.blue,
                       child: Text(
-                        'Back',
+                        'Sign Up',
+                        style: TextStyle(fontSize: 20),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) {
-                            return Welcome(); //Main Welcome Page
-                          }),
-                          // print(nameController.text);
-                          // print(passwordController.text);
-                        );
+                        //signup screen
                       },
-                    )),
+                    )
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ))
               ],
             )));
   }
