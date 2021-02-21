@@ -1,12 +1,14 @@
 import 'dart:ui';
 
-import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
+import 'package:counter_flutter/Screens/Welcome/Customer/Register/register.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:counter_flutter/Screens/Welcome/Designer/Welcome/dzwelcome.dart';
-import 'package:counter_flutter/Screens/Welcome/Retailer/Welcome/retailwelcome.dart';
-
 import 'package:flutter/material.dart';
-import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
+import 'package:counter_flutter/Screens/Welcome/Customer/Login/login.dart';
+import 'package:counter_flutter/Screens/Welcome/Designer/Login/dzlogin.dart';
+import 'package:counter_flutter/Screens/Welcome/Designer/Register/dzregister.dart';
+import 'package:counter_flutter/Screens/Welcome/Retailer/Login/retaillogin.dart';
+import 'package:counter_flutter/Screens/Welcome/Retailer/Register/retailregister.dart';
+import 'package:counter_flutter/Screens/Welcome/welcome.dart';
 
 void main() => runApp(chooseWidget('splashRoute'));
 
@@ -14,7 +16,7 @@ Widget chooseWidget(String route) {
   switch (route) {
     // name of the route defined in the host app
     case 'splashRoute':
-      return Welcome();
+      return RetailWelcome();
 
     default:
       return Center(
@@ -26,12 +28,14 @@ Widget chooseWidget(String route) {
   }
 }
 
-class Welcome extends StatefulWidget {
+// ignore: camel_case_types
+class RetailWelcome extends StatefulWidget {
   @override
-  _WelcomeState createState() => _WelcomeState();
+  _RetailWelcomeState createState() => _RetailWelcomeState();
 }
 
-class _WelcomeState extends State<Welcome> {
+// ignore: camel_case_types
+class _RetailWelcomeState extends State<RetailWelcome> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -69,36 +73,38 @@ class _SplashScreenState extends State<SplashScreen> {
                           fontWeight: FontWeight.w500,
                           fontSize: 30),
                     )),
-                SizedBox(height: size.height * 0.05),
                 Container(
                   alignment: Alignment.center,
                   child: Text(
-                    'Choose Your Role',
+                    'Shop Retailer',
                     style: TextStyle(
                         color: Colors.black45,
                         fontWeight: FontWeight.w500,
                         fontSize: 20),
                   ),
                 ),
-                SizedBox(height: size.height * 0.05),
+                SizedBox(height: size.height * 0.10),
+                // SizedBox(height: size.height * 0.05),
                 Container(
                     height: 90,
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: RaisedButton(
                       textColor: Colors.white,
                       color: Colors.blue,
-                      child: Text('Customer'),
+                      child: Text('Login'),
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) {
-                            return CusWelcome();
+                            return retailLogin();
                           }),
 
                           // print(nameController.text);
                           // print(passwordController.
                           // text
                         );
+                        //    print(nameController.text);
+                        //  print(passwordController.text);
                       },
                     )),
                 SizedBox(height: size.height * 0.05),
@@ -108,18 +114,19 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: RaisedButton(
                       textColor: Colors.white,
                       color: Colors.blue,
-                      child: Text('Designer'),
+                      child: Text('Register'),
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) {
-                            return DzWelcome();
+                            return retailRegister();
                           }),
-
                           // print(nameController.text);
                           // print(passwordController.
                           // text
                         );
+                        //print(nameController.text);
+                        //print(passwordController.text);
                       },
                     )),
                 SizedBox(height: size.height * 0.05),
@@ -127,19 +134,27 @@ class _SplashScreenState extends State<SplashScreen> {
                     height: 90,
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.blue,
-                      child: Text('Shop Retailer'),
+                      elevation: 0,
+                      hoverElevation: 0,
+                      focusElevation: 0,
+                      highlightElevation: 0,
+                      textColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero,
+                        side: BorderSide(color: Colors.blue, width: 4),
+                      ),
+                      color: Colors.white,
+                      child: Text(
+                        'Back',
+                      ),
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) {
-                            return RetailWelcome();
+                            return Welcome(); //Main Welcome Page
                           }),
-
                           // print(nameController.text);
-                          // print(passwordController.
-                          // text
+                          // print(passwordController.text);
                         );
                       },
                     )),

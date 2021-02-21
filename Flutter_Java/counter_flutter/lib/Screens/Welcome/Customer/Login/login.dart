@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
+import 'package:counter_flutter/Screens/Welcome/Customer/Register/register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
@@ -135,7 +136,16 @@ class _SplashScreenState extends State<SplashScreen> {
                         style: TextStyle(fontSize: 20),
                       ),
                       onPressed: () {
-                        //signup screen
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return CusRegister();
+                          }),
+
+                          // print(nameController.text);
+                          // print(passwordController.
+                          // text
+                        );
                       },
                     )
                   ],

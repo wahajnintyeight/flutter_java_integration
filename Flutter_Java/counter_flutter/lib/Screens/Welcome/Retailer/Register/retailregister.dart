@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
 import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
+import 'package:counter_flutter/Screens/Welcome/Retailer/Welcome/retailwelcome.dart';
 
 void main() => runApp(chooseWidget('splashRoute'));
 
@@ -11,7 +12,7 @@ Widget chooseWidget(String route) {
   switch (route) {
     // name of the route defined in the host app
     case 'splashRoute':
-      return CusRegister();
+      return retailRegister();
 
     default:
       return Center(
@@ -23,12 +24,12 @@ Widget chooseWidget(String route) {
   }
 }
 
-class CusRegister extends StatefulWidget {
+class retailRegister extends StatefulWidget {
   @override
-  _CusRegisterState createState() => _CusRegisterState();
+  _retailRegisterState createState() => _retailRegisterState();
 }
 
-class _CusRegisterState extends State<CusRegister> {
+class _retailRegisterState extends State<retailRegister> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -60,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
             icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () =>
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return CusWelcome();
+              return RetailWelcome();
             })),
           ),
           title: Text("Shop 'N' Preview"),

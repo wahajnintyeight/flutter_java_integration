@@ -1,9 +1,13 @@
 import 'dart:ui';
 
+import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
+import 'package:counter_flutter/Screens/Welcome/Customer/Register/register.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:counter_flutter/Screens/Welcome/Designer/Welcome/dzwelcome.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
-import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
+import 'package:counter_flutter/Screens/Welcome/Retailer/Welcome/retailwelcome.dart';
+import 'package:counter_flutter/Screens/Welcome/Retailer/Register/retailregister.dart';
 
 void main() => runApp(chooseWidget('splashRoute'));
 
@@ -11,7 +15,7 @@ Widget chooseWidget(String route) {
   switch (route) {
     // name of the route defined in the host app
     case 'splashRoute':
-      return CusRegister();
+      return retailLogin();
 
     default:
       return Center(
@@ -23,12 +27,12 @@ Widget chooseWidget(String route) {
   }
 }
 
-class CusRegister extends StatefulWidget {
+class retailLogin extends StatefulWidget {
   @override
-  _CusRegisterState createState() => _CusRegisterState();
+  _retailLoginState createState() => _retailLoginState();
 }
 
-class _CusRegisterState extends State<CusRegister> {
+class _retailLoginState extends State<retailLogin> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,12 +48,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  TextEditingController UnameController = TextEditingController();
-  TextEditingController FnameController = TextEditingController();
-  TextEditingController EmailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
-  TextEditingController password2Controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
             icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () =>
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return CusWelcome();
+              return RetailWelcome();
             })),
           ),
           title: Text("Shop 'N' Preview"),
@@ -75,36 +75,16 @@ class _SplashScreenState extends State<SplashScreen> {
                     alignment: Alignment.center,
                     padding: EdgeInsets.all(10),
                     child: Text(
-                      'Sign Up',
+                      'Sign in',
                       style: TextStyle(fontSize: 20),
                     )),
                 Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  padding: EdgeInsets.all(10),
                   child: TextField(
-                    controller: FnameController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Full Name',
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    controller: UnameController,
+                    controller: nameController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'User Name',
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    controller: EmailController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Email',
                     ),
                   ),
                 ),
@@ -119,30 +99,51 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    obscureText: true,
-                    controller: password2Controller,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Re-type Password',
-                    ),
-                  ),
+                FlatButton(
+                  onPressed: () {
+                    //forgot password screen
+                  },
+                  textColor: Colors.blue,
+                  child: Text('Forgot Password'),
                 ),
-                SizedBox(height: size.height * 0.05),
                 Container(
                     height: 50,
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: RaisedButton(
                       textColor: Colors.white,
                       color: Colors.blue,
-                      child: Text('Sign Up'),
+                      child: Text('Login'),
                       onPressed: () {
-                        // print(nameController.text);
-                        // print(passwordController.text);
+                        print(nameController.text);
+                        print(passwordController.text);
                       },
                     )),
+                Container(
+                    child: Row(
+                  children: <Widget>[
+                    Text('Does not have account?'),
+                    FlatButton(
+                      textColor: Colors.blue,
+                      child: Text(
+                        'Sign Up',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return retailRegister();
+                          }),
+
+                          // print(nameController.text);
+                          // print(passwordController.
+                          // text
+                        );
+                      },
+                    )
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ))
               ],
             )));
   }
