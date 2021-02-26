@@ -12,10 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40451224-1a2a-4cd0-b4a6-78ee8a740c25" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CourtCounter/app/src/main/java/com/example/courtcounter/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/CourtCounter/app/src/main/java/com/example/courtcounter/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/counter_flutter/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/counter_flutter/lib/main.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,49 +109,13 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="414" y="175" width="1092" height="794" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604075883495">
+    <state x="302" y="165" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1614071911161">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="414" y="175" width="1092" height="794" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604075883495" />
-    <state x="808" y="409" width="642" height="222" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1604070885924">
+    <state x="302" y="165" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1614071911161" />
+    <state x="628" y="265" width="769" height="490" key="FileChooserDialogImpl" timestamp="1614071978314">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="808" y="409" width="642" height="222" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604070885924" />
-    <state x="718" y="391" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1604074494241">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="718" y="391" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040@0.0.1920.1040" timestamp="1604074494241" />
-    <state x="532" y="256" key="AndroidProcessChooserDialog" timestamp="1604556624222">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="532" y="256" key="AndroidProcessChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604556624222" />
-    <state x="1201" y="265" key="FileChooserDialogImpl" timestamp="1604556660002">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="1201" y="265" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1604556660002" />
-    <state width="1877" height="347" key="GridCell.Tab.0.bottom" timestamp="1604556664662">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="347" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604556664662" />
-    <state width="1877" height="347" key="GridCell.Tab.0.center" timestamp="1604556664662">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="347" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604556664662" />
-    <state width="1877" height="347" key="GridCell.Tab.0.left" timestamp="1604556664662">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="347" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604556664662" />
-    <state width="1877" height="347" key="GridCell.Tab.0.right" timestamp="1604556664662">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="347" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604556664662" />
-    <state x="313" y="324" key="SettingsEditor" timestamp="1604074631719">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="313" y="324" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1604074631719" />
-    <state x="92" y="92" width="1736" height="856" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1604075449465">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="92" y="92" width="1736" height="856" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604075449465" />
+    <state x="628" y="265" width="769" height="490" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1614071978314" />
   </component>
 </project>

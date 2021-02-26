@@ -5,7 +5,7 @@ import 'package:counter_flutter/Screens/Welcome/Customer/Register/register.dart'
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
-
+import 'package:counter_flutter/Screens/Home/home.dart';
 void main() => runApp(chooseWidget('splashRoute'));
 
 Widget chooseWidget(String route) {
@@ -68,16 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
             child: ListView(
               children: <Widget>[
                 SizedBox(height: size.height * 0.05),
-                // Container(
-                //     alignment: Alignment.center,
-                //     padding: EdgeInsets.all(10),
-                //     child: Text(
-                //       "Shop 'N' Preview",
-                //       style: TextStyle(
-                //           color: Colors.blue,
-                //           fontWeight: FontWeight.w500,
-                //           fontSize: 30),
-                //     )),
+
                 Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.all(10),
@@ -121,8 +112,15 @@ class _SplashScreenState extends State<SplashScreen> {
                       color: Colors.blue,
                       child: Text('Login'),
                       onPressed: () {
-                        print(nameController.text);
-                        print(passwordController.text);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return CusHome();
+                          }),
+
+
+                          // text
+                        );
                       },
                     )),
                 Container(

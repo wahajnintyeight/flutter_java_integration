@@ -1,6 +1,9 @@
 package com.example.courtcounter;
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.R.xml;
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Bundle;
 import com.example.android.courtcounter.R;
@@ -12,7 +15,10 @@ import com.google.ar.sceneform.rendering.Texture;
 import com.google.ar.sceneform.ux.AugmentedFaceNode;
 //import com.example.counter_flutter.R;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 //import androidx.appcompat.app.AppCompatActivity;
+import android.util.Log;
 import android.view.WindowManager;
 
 //package com.example.
@@ -22,7 +28,9 @@ import java.util.Collection;
 import io.flutter.embedding.android.FlutterActivity;
 public class MainActivity extends AppCompatActivity {
 
-private ModelRenderable modelRenderable;
+
+
+    private ModelRenderable modelRenderable;
 private Texture texture;
 
     private boolean isAdded = false;
@@ -31,23 +39,27 @@ private Texture texture;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Context context = null;
+//        if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) !=
+//                PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},
+//                    50); }
 
 CustomArFragment customerArFragment = (CustomArFragment) getSupportFragmentManager()
         .findFragmentById(R.id.arFragment);
 
 ModelRenderable.builder()
-        .setSource(this,R.raw.fox_face)
+        .setSource(this,R.raw.ear)
         .build()
         .thenAccept(renderable1 ->{
             modelRenderable = renderable1;
             modelRenderable.setShadowCaster(false);
             modelRenderable.setShadowReceiver(false);
         } );
-Texture.builder()
-        .setSource(this,R.drawable.fox_face_mesh_texture)
-        .build()
-        .thenAccept(texture-> this.texture = texture);
+//Texture.builder()
+//        .setSource(this,R.drawable.fox_face_mesh_texture)
+//        .build()
+//        .thenAccept(texture-> this.texture = texture);
 customerArFragment.getArSceneView()
 .setCameraStreamRenderPriority(Renderable.RENDER_PRIORITY_FIRST);
 customerArFragment.getArSceneView().getScene().addOnUpdateListener(frameTime -> {
