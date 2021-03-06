@@ -1,11 +1,13 @@
 import 'dart:ui';
 
+import 'package:counter_flutter/Screens/Home/mainpage.dart';
 import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
 import 'package:counter_flutter/Screens/Welcome/Customer/Register/register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
 import 'package:counter_flutter/Screens/Home/home.dart';
+
 void main() => runApp(chooseWidget('splashRoute'));
 
 Widget chooseWidget(String route) {
@@ -50,6 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+ Invocation invocation;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
@@ -68,7 +71,6 @@ class _SplashScreenState extends State<SplashScreen> {
             child: ListView(
               children: <Widget>[
                 SizedBox(height: size.height * 0.05),
-
                 Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.all(10),
@@ -107,20 +109,23 @@ class _SplashScreenState extends State<SplashScreen> {
                 Container(
                     height: 50,
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.blue,
+                    child: ElevatedButton(
+                      // textColor: Colors.white,
+                      // color: Colors.blue,
                       child: Text('Login'),
                       onPressed: () {
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) {
                             return CusHome();
                           }),
 
-
+                          // print(nameController.text);
+                          // print(passwordController.
                           // text
                         );
+
                       },
                     )),
                 Container(
