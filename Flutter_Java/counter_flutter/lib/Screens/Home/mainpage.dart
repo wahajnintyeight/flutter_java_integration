@@ -49,6 +49,8 @@ class _MainPageCusState extends State<MainPageCus> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     int activeMenu = 0;
+    String jName = widget.jT.jewelryType;
+    String ID = widget.jT.jID.toString();
     return Scaffold(
         // body: Padding(
         //     padding: EdgeInsets.all(10),
@@ -80,7 +82,7 @@ class _MainPageCusState extends State<MainPageCus> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  "Online Shopping",
+                  "Viewing $jName with ID: $ID",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
                 ),
                 Row(
@@ -102,35 +104,35 @@ class _MainPageCusState extends State<MainPageCus> {
             scrollDirection: Axis.horizontal,
             child: Padding(
               padding: const EdgeInsets.only(right: 20, left: 20),
-              child: Row(
-                  children: List.generate(menuItems.length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        activeMenu = index;
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                                  color: activeMenu == index
-                                      ? primary
-                                      : Colors.transparent,
-                                  width: 2))),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          menuItems[index],
-                          style: TextStyle(fontSize: 17),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              })),
+              // child: Row(
+              //     children: List.generate(menuItems.length, (index) {
+              //   return Padding(
+              //     padding: const EdgeInsets.only(right: 20),
+              //     child: InkWell(
+              //       onTap: () {
+              //         setState(() {
+              //           activeMenu = index;
+              //         });
+              //       },
+              //       child: Container(
+              //         decoration: BoxDecoration(
+              //             border: Border(
+              //                 bottom: BorderSide(
+              //                     color: activeMenu == index
+              //                         ? primary
+              //                         : Colors.transparent,
+              //                     width: 2))),
+              //         child: Padding(
+              //           padding: const EdgeInsets.all(8.0),
+              //           child: Text(
+              //             menuItems[index],
+              //             style: TextStyle(fontSize: 17),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   );
+              // })),
             ),
           ),
           SizedBox(
@@ -158,6 +160,7 @@ class _MainPageCusState extends State<MainPageCus> {
                 },
                 child: Card(
                     elevation: 2,
+
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -166,6 +169,7 @@ class _MainPageCusState extends State<MainPageCus> {
                           child: Container(
                             width: (size.width - 16) / 2,
                             height: (size.width - 16) / 2,
+
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image:

@@ -96,7 +96,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   height: 400,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: NetworkImage(activeImg), fit: BoxFit.cover)),
+                          image: AssetImage(activeImg), fit: BoxFit.cover)),
                 ),
               ),
             ),
@@ -269,7 +269,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           height: 50,
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: NetworkImage(
+                                  image: AssetImage(
                                       widget.color[index]['value']),
                                   fit: BoxFit.cover),
                               border: Border.all(
