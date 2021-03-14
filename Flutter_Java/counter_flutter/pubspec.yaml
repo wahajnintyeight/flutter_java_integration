@@ -29,10 +29,14 @@ dependencies:
   cupertino_icons: ^1.0.0
   line_icons:
 
+  firebase_auth: ^0.14.0+5
+  cloud_firestore: ^0.13.0+1
+  firebase_core: ^0.4.2+1
+  firebase_database:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  firebase_core: ^0.4.0+9
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -46,12 +50,15 @@ flutter:
   # To add Flutter specific assets to your application, add an assets section,
   # like this:
   assets:
+    - assets/images/
+    - assets/images/earrings.jpg
     - assets/images/basketball.jpeg
     - assets/images/icon.png
     - assets/images/diamond.png
     - assets/images/artificial.png
     - assets/images/gold.png
     - assets/images/silver.png
+
     #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
