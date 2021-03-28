@@ -4,10 +4,10 @@ import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:counter_flutter/Screens/Welcome/Designer/Welcome/dzwelcome.dart';
 import 'package:counter_flutter/Screens/Welcome/Retailer/Welcome/retailwelcome.dart';
-
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
-
+import 'package:counter_flutter/models/authentication.dart';
 void main() => runApp(chooseWidget('splashRoute'));
 
 Widget chooseWidget(String route) {

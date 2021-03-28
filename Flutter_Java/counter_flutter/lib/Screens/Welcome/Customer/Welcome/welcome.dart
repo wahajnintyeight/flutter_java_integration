@@ -1,10 +1,12 @@
 import 'dart:ui';
 
 import 'package:counter_flutter/Screens/Welcome/Customer/Register/register.dart';
+import 'package:counter_flutter/models/authentication.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Welcome/Customer/Login/login.dart';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(chooseWidget('splashRoute'));
 

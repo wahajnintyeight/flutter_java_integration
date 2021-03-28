@@ -7,6 +7,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
 import 'package:counter_flutter/Screens/Home/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:counter_flutter/models/authentication.dart';
 
 void main() => runApp(chooseWidget('splashRoute'));
 
@@ -49,10 +52,51 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  Map<String, String> _authData = {'email': '', 'password': ''};
+
+  void _showErrorDialog(String msg) {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              title: Text('An Error Occured'),
+              content: Text(msg),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Okay'),
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                )
+              ],
+            ));
+  }
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+
+    try {
+      await Provider.of<Authentication>(context, listen: false)
+          .signIn(_authData['email'], _authData['password']);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) {
+          return CusHome();
+        }),
+
+      );
+    } catch (error) {
+      var errorMessage = 'Authentication Failed. Please try again later.';
+      _showErrorDialog(errorMessage);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
- Invocation invocation;
+    Invocation invocation;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
@@ -70,7 +114,7 @@ class _SplashScreenState extends State<SplashScreen> {
             padding: EdgeInsets.all(10),
             child: ListView(
               children: <Widget>[
-                SizedBox(height: size.height * 0.05),
+                SizedBox(height: size.height * 0.10),
                 Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.all(10),
@@ -79,81 +123,132 @@ class _SplashScreenState extends State<SplashScreen> {
                       style: TextStyle(fontSize: 20),
                     )),
                 Container(
-                  padding: EdgeInsets.all(10),
-                  child: TextField(
-                    controller: nameController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'User Name',
+                    padding: EdgeInsets.all(10),
+                    child: Form(
+                        key: _formKey,
+                        child: SingleChildScrollView(
+                            child: Column(children: <Widget>[
+                          //email
+                          TextFormField(
+                            decoration: InputDecoration(labelText: 'Email'),
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value.isEmpty || !value.contains('@')) {
+                                return 'Invalid Email';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _authData['email'] = value;
+                            },
+                          ),
+                          //password
+                          TextFormField(
+                            decoration: InputDecoration(labelText: 'Password'),
+                            obscureText: true,
+                            validator: (value) {
+                              if (value.isEmpty || value.length <= 5) {
+                                return 'Invalid Password';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) {
+                              _authData['password'] = value;
+                            },
+                          ),
+                          FlatButton(
+                            onPressed: () {
+                              //forgot password screen
+                            },
+                            textColor: Colors.blue,
+                            child: Text('Forgot Password'),
+                          ),
+                          Container(
+                            width: 190,
+                            height: 50,
+                            child: RaisedButton(
+                                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                child: Text('Login'),
+                                onPressed: () {
+                                  _submit();
+                                },
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                color: Colors.blue,
+                                textColor: Colors.white),
+                          ),
+                          Container(
+                              child: Row(
+                            children: <Widget>[
+                              Text('Does not have account?'),
+                              FlatButton(
+                                textColor: Colors.blue,
+                                child: Text(
+                                  'Sign Up',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return CusRegister();
+                                    }),
+
+                                    // print(nameController.text);
+                                    // print(passwordController.
+                                    // text
+                                  );
+                                },
+                              )
+                            ],
+                            mainAxisAlignment: MainAxisAlignment.center,
+                          ))
+                        ])))
+
+                    // child: TextField(
+                    //   controller: nameController,
+                    //   decoration: InputDecoration(
+                    //     border: OutlineInputBorder(),
+                    //     labelText: 'Email',
+                    //   ),
+                    // ),
                     ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: TextField(
-                    obscureText: true,
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Password',
-                    ),
-                  ),
-                ),
-                FlatButton(
-                  onPressed: () {
-                    //forgot password screen
-                  },
-                  textColor: Colors.blue,
-                  child: Text('Forgot Password'),
-                ),
-                Container(
-                    height: 50,
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: ElevatedButton(
-                      // textColor: Colors.white,
-                      // color: Colors.blue,
-                      child: Text('Login'),
-                      onPressed: () {
+                // Container(
+                //   padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                //   child: TextField(
+                //     obscureText: true,
+                //     onChanged: (val){
+                //
+                //     },
+                //     controller: passwordController,
+                //     decoration: InputDecoration(
+                //       border: OutlineInputBorder(),
+                //       labelText: 'Password',
+                //     ),
+                //   ),
+                // ),
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) {
-                            return CusHome();
-                          }),
-
-                          // print(nameController.text);
-                          // print(passwordController.
-                          // text
-                        );
-
-                      },
-                    )),
-                Container(
-                    child: Row(
-                  children: <Widget>[
-                    Text('Does not have account?'),
-                    FlatButton(
-                      textColor: Colors.blue,
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) {
-                            return CusRegister();
-                          }),
-
-                          // print(nameController.text);
-                          // print(passwordController.
-                          // text
-                        );
-                      },
-                    )
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.center,
-                ))
+                // Container(
+                //     height: 50,
+                //     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                //     child: ElevatedButton(
+                //       // textColor: Colors.white,
+                //       // color: Colors.blue,
+                //       child: Text('Login'),
+                //       onPressed: () async {
+                //         // Navigator.push(
+                //         //   context,
+                //         //   MaterialPageRoute(builder: (context) {
+                //         //     return CusHome();
+                //         //   }),
+                //         //
+                //         //   // print(nameController.text);
+                //         //   // print(passwordController.
+                //         //   // text
+                //         // );
+                //       },
+                //     )),
               ],
             )));
   }

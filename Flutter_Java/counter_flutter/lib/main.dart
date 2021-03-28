@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:counter_flutter/models/authentication.dart';
 void main() => runApp(chooseWidget('splashRoute'));
 
 Widget chooseWidget(String route) {
@@ -29,9 +31,12 @@ class MyFlutterActivity extends StatefulWidget {
 class _MyFlutterActivityState extends State<MyFlutterActivity> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Welcome(),
+    return MultiProvider(
+      providers: [ChangeNotifierProvider.value(value: Authentication())],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Welcome(),
+      ),
     );
   }
 }
