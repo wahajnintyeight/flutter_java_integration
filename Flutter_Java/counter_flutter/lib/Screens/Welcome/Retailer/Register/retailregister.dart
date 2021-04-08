@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
 import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
 import 'package:counter_flutter/Screens/Welcome/Retailer/Welcome/retailwelcome.dart';
-
+import 'package:counter_flutter/services/retailerAuth.dart';
 void main() => runApp(chooseWidget('splashRoute'));
 
 Widget chooseWidget(String route) {
@@ -51,6 +51,30 @@ class _SplashScreenState extends State<SplashScreen> {
   TextEditingController passwordController = TextEditingController();
 
   TextEditingController password2Controller = TextEditingController();
+
+  void _signUpUser(String email, String password, BuildContext context, String fullName,String userName) async
+  {
+    try {
+      String _returnString = await retailerAuth().signUpUser(email, password, fullName,userName);
+      if (_returnString == "success")
+      {
+        Navigator.pop(context);
+      } else
+        {
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text(_returnString),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -140,8 +164,21 @@ class _SplashScreenState extends State<SplashScreen> {
                       color: Colors.blue,
                       child: Text('Sign Up'),
                       onPressed: () {
-                        // print(nameController.text);
-                        // print(passwordController.text);
+                        if (passwordController.text == password2Controller.text) {
+                          print("Here");
+                          _signUpUser(EmailController.text, passwordController.text, context,
+                              FnameController.text  ,UnameController.text);
+                        }
+                        else
+                          {
+                          // ignore: deprecated_member_use
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Passwords do not match"),
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                        }
                       },
                     )),
               ],
