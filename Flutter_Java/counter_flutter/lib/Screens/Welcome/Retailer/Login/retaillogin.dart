@@ -8,9 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
 import 'package:counter_flutter/Screens/Welcome/Retailer/Welcome/retailwelcome.dart';
 import 'package:counter_flutter/Screens/Welcome/Retailer/Register/retailregister.dart';
-
+import 'package:counter_flutter/services/retailerAuth.dart';
 void main() => runApp(chooseWidget('splashRoute'));
-
+enum LoginType {
+  email,
+  google,
+}
 Widget chooseWidget(String route) {
   switch (route) {
     // name of the route defined in the host app
@@ -48,8 +51,52 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+
+
+
+
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  void _loginUser({
+    @required LoginType type,
+    String email,
+    String password,
+    BuildContext context,
+  }) async {
+    try {
+      String _returnString;
+
+      switch (type) {
+        case LoginType.email:
+          _returnString = await retailerAuth().loginUserWithEmail(email, password);
+          break;
+        default:
+      }
+
+      if (_returnString == "success") {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RetailWelcome(),
+          ),
+              (route) => false,
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(_returnString),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +131,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     controller: nameController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: 'User Name',
+                      labelText: 'E-mail',
                     ),
                   ),
                 ),
@@ -114,8 +161,11 @@ class _SplashScreenState extends State<SplashScreen> {
                       color: Colors.blue,
                       child: Text('Login'),
                       onPressed: () {
-                        print(nameController.text);
-                        print(passwordController.text);
+                        _loginUser(
+                            type: LoginType.email,
+                            email: nameController.text,
+                            password: passwordController.text,
+                            context: context);
                       },
                     )),
                 Container(
@@ -135,9 +185,6 @@ class _SplashScreenState extends State<SplashScreen> {
                             return retailRegister();
                           }),
 
-                          // print(nameController.text);
-                          // print(passwordController.
-                          // text
                         );
                       },
                     )

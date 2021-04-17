@@ -6,6 +6,7 @@ import 'package:counter_flutter/Screens/Welcome/welcome.dart';
 import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
 import 'package:counter_flutter/Screens/Welcome/Retailer/Welcome/retailwelcome.dart';
 import 'package:counter_flutter/services/retailerAuth.dart';
+
 void main() => runApp(chooseWidget('splashRoute'));
 
 Widget chooseWidget(String route) {
@@ -52,15 +53,39 @@ class _SplashScreenState extends State<SplashScreen> {
 
   TextEditingController password2Controller = TextEditingController();
 
-  void _signUpUser(String email, String password, BuildContext context, String fullName,String userName) async
-  {
+  void _showErrorDialog(String msg) {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              title: Text('An Error Occured'),
+              content: Text(msg),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Okay'),
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                )
+              ],
+            ));
+  }
+
+  _displaySnackBar(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text("Passwords do not match"),
+      duration: Duration(seconds: 2),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _signUpUser(String email, String password, BuildContext context,
+      String fullName, String userName) async {
     try {
-      String _returnString = await retailerAuth().signUpUser(email, password, fullName,userName);
-      if (_returnString == "success")
-      {
+      String _returnString =
+          await retailerAuth().signUpUser(email, password, fullName, userName);
+      if (_returnString == "success") {
         Navigator.pop(context);
-      } else
-        {
+      } else {
         Scaffold.of(context).showSnackBar(
           SnackBar(
             content: Text(_returnString),
@@ -72,9 +97,6 @@ class _SplashScreenState extends State<SplashScreen> {
       print(e);
     }
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -157,30 +179,35 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 SizedBox(height: size.height * 0.05),
                 Container(
-                    height: 50,
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.blue,
-                      child: Text('Sign Up'),
-                      onPressed: () {
-                        if (passwordController.text == password2Controller.text) {
-                          print("Here");
-                          _signUpUser(EmailController.text, passwordController.text, context,
-                              FnameController.text  ,UnameController.text);
-                        }
-                        else
-                          {
-                          // ignore: deprecated_member_use
-                          Scaffold.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("Passwords do not match"),
-                              duration: Duration(seconds: 2),
-                            ),
-                          );
-                        }
-                      },
-                    )),
+                  height: 50,
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: Builder(
+                      builder: (context) => RaisedButton(
+                            textColor: Colors.white,
+                            color: Colors.blue,
+                            child: Text('Sign Up'),
+                            onPressed: () {
+                              if (passwordController.text ==
+                                  password2Controller.text) {
+                                print("Here");
+                                _signUpUser(
+                                    EmailController.text,
+                                    passwordController.text,
+                                    context,
+                                    FnameController.text,
+                                    UnameController.text);
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return CusWelcome();
+                                }));
+                              } else {
+                                // ignore: deprecated_member_use
+                                _displaySnackBar(context);
+                                //   _showErrorDialog("Passwords do not match!");
+                              }
+                            },
+                          )),
+                ),
               ],
             )));
   }
