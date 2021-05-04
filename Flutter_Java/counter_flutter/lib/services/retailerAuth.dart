@@ -7,22 +7,21 @@ import 'package:flutter/services.dart';
 
 class retailerAuth {
   FirebaseAuth _auth = FirebaseAuth.instance;
-
+  Retailer curRetailer = Retailer();
   Future<String> loginUserWithEmail(String email, String password) async {
     String retVal = "error";
 
     try {
-      await _auth.signInWithEmailAndPassword(
+      AuthResult authResult = await _auth.signInWithEmailAndPassword(
           email: email.trim(), password: password);
-
-    }
-    on PlatformException catch (e)
-    {
+      curRetailer = await DBFuture().getRetailInfo(authResult.user.uid);
+      if (curRetailer != null) {
+        retVal = "success";
+      }
+    } on PlatformException catch (e) {
       print("WORKS");
       retVal = e.message;
-    }
-    catch (e)
-    {
+    } catch (e) {
       print(e);
     }
 

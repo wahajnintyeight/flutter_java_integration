@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <div class="form-group">
+            <div class="mainDiv" align="right">
+                <h1 align="left">Firebase File Upload</h1>
+                <progress id="uploader" value="0" max="100">0%</progress>
+                <input type="file" id="fileButton" value="upload" />
+            </div>
+
+        </div>
+
+        <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAnlCfmWMAp1ZzhW3v1i8QzHbCNCSh3h9w",
+            authDomain: "jewelry-preview-application.firebaseapp.com",
+            databaseURL: "https://jewelry-preview-application-default-rtdb.firebaseio.com",
+            projectId: "jewelry-preview-application",
+            storageBucket: "jewelry-preview-application.appspot.com",
+            messagingSenderId: "720421130231",
+            appId: "1:720421130231:web:512b9d574f8b616ad928f2"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+        <script>
+        
+  var uploader = document.getElementById('uploader');
+  var fileButton =         document.getElementById('fileButton');
+  fileButton.addEventListener('change', function(e){
+  var file = e.target.files[0];
+  var storageRef = firebase.storage().ref('img/'+file.name);
+  var task = storageRef.put(file);
+  task.on('state_changed', function progress(snapshot) {
+    var percentage = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+    uploader.value = percentage;
+
+  }, function error(err) {
+
+
+  },function complete() {
+
+  });
+});  
+    </script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+            crossorigin="anonymous"></script>
+    </body>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+</html>

@@ -24,4 +24,20 @@ class DBFuture {
 
     return retVal;
   }
+
+  Future<Retailer> getRetailInfo(String rID) async {
+    Retailer retVal = Retailer();
+    try {
+      DocumentSnapshot _docSnapshot =
+      await _firestore.collection("retailer").document(rID).get();
+      retVal.rID = rID;
+      retVal.fName = _docSnapshot.data["fullName"];
+      retVal.email = _docSnapshot.data["email"];
+      retVal.accCreated = _docSnapshot.data["accountCreated"];
+    } catch (e) {
+      print(e);
+    }
+    return retVal;
+  }
+
 }
