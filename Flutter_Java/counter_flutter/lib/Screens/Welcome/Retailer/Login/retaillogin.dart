@@ -9,6 +9,7 @@ import 'package:counter_flutter/Screens/Welcome/welcome.dart';
 import 'package:counter_flutter/Screens/Welcome/Retailer/Welcome/retailwelcome.dart';
 import 'package:counter_flutter/Screens/Welcome/Retailer/Register/retailregister.dart';
 import 'package:counter_flutter/services/retailerAuth.dart';
+import '../../../Home/Retailer/home.dart';
 void main() => runApp(chooseWidget('splashRoute'));
 enum LoginType {
   email,
@@ -79,7 +80,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => RetailWelcome(),
+            builder: (context) => RetailHome(),
           ),
               (route) => false,
         );
