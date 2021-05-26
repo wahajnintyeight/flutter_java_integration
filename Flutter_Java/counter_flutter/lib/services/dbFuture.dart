@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:counter_flutter/models/retailer.dart';
 import 'package:flutter/services.dart';
-
+import '../models/earrings.dart';
 
 class DBFuture {
   Firestore _firestore = Firestore.instance;
 
-  Future<String> createUser(Retailer user) async
-  {
+  Future<String> createUser(Retailer user) async {
     String retVal = "error";
 
     try {
@@ -15,8 +14,28 @@ class DBFuture {
         'fullName': user.fName.trim(),
         'email': user.email.trim(),
         'accountCreated': Timestamp.now(),
-        'userName' : user.Uname
+        'userName': user.Uname
       });
+      retVal = "success";
+    } catch (e) {
+      print(e);
+    }
+
+    return retVal;
+  }
+
+  Future<String> addEarrings(Earrings earrings) async {
+    String retVal = "error";
+    try {
+      await _firestore.collection("earrings").document(earrings.eID).setData({
+        'name': earrings.name.trim(),
+        'price': earrings.price,
+        'outOfStock': earrings.outOfStock,
+        'createdOn': Timestamp.now(),
+        'type': earrings.type,
+        'thumbnail': earrings.thumbnail
+      });
+
       retVal = "success";
     } catch (e) {
       print(e);
@@ -29,7 +48,7 @@ class DBFuture {
     Retailer retVal = Retailer();
     try {
       DocumentSnapshot _docSnapshot =
-      await _firestore.collection("retailer").document(rID).get();
+          await _firestore.collection("retailer").document(rID).get();
       retVal.rID = rID;
       retVal.fName = _docSnapshot.data["fullName"];
       retVal.email = _docSnapshot.data["email"];
@@ -39,5 +58,4 @@ class DBFuture {
     }
     return retVal;
   }
-
 }

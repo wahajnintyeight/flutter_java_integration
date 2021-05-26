@@ -9,14 +9,15 @@ import 'package:counter_flutter/Screens/Welcome/Designer/Register/dzregister.dar
 import 'package:counter_flutter/Screens/Welcome/Retailer/Login/retaillogin.dart';
 import 'package:counter_flutter/Screens/Welcome/Retailer/Register/retailregister.dart';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
-import 'ManageItems/manageItems.dart';
+import '../home.dart';
+import 'addItem.dart';
 void main() => runApp(chooseWidget('splashRoute'));
 
 Widget chooseWidget(String route) {
   switch (route) {
   // name of the route defined in the host app
     case 'splashRoute':
-      return RetailHome();
+      return ManageItems();
 
     default:
       return Center(
@@ -29,13 +30,13 @@ Widget chooseWidget(String route) {
 }
 
 // ignore: camel_case_types
-class RetailHome extends StatefulWidget {
+class ManageItems extends StatefulWidget {
   @override
-  _RetailHomeState createState() => _RetailHomeState();
+  _ManageItemsState createState() => _ManageItemsState();
 }
 
 // ignore: camel_case_types
-class _RetailHomeState extends State<RetailHome> {
+class _ManageItemsState extends State<ManageItems> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -91,12 +92,12 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: RaisedButton(
                       textColor: Colors.white,
                       color: Colors.blue,
-                      child: Text('View all existing items'),
+                      child: Text('Add new Item'),
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) {
-                            return retailLogin();
+                            return AddItem();
                           }),
 
                           // print(nameController.text);
@@ -114,29 +115,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: RaisedButton(
                       textColor: Colors.white,
                       color: Colors.blue,
-                      child: Text('Manage items'),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) {
-                            return ManageItems();
-                          }),
-                          // print(nameController.text);
-                          // print(passwordController.
-                          // text
-                        );
-                        //print(nameController.text);
-                        //print(passwordController.text);
-                      },
-                    )),
-                SizedBox(height: size.height * 0.05),
-                Container(
-                    height: 90,
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.blue,
-                      child: Text('View all Registered Customers'),
+                      child: Text('Delete an Item'),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -152,6 +131,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       },
                     )),
                 SizedBox(height: size.height * 0.05),
+
                 Container(
                     height: 90,
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -163,17 +143,17 @@ class _SplashScreenState extends State<SplashScreen> {
                       textColor: Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.zero,
-                        side: BorderSide(color: Colors.red, width: 4),
+                        side: BorderSide(color: Colors.blue, width: 4),
                       ),
                       color: Colors.white,
                       child: Text(
-                        'Log Out',
+                        'Back',
                       ),
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) {
-                            return Welcome(); //Main Welcome Page
+                            return RetailHome(); //Main Welcome Page
                           }),
                           // print(nameController.text);
                           // print(passwordController.text);

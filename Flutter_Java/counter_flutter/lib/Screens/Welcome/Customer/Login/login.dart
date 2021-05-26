@@ -52,6 +52,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   final GlobalKey<FormState> _formKey = GlobalKey();
   Map<String, String> _authData = {'email': '', 'password': ''};
 
