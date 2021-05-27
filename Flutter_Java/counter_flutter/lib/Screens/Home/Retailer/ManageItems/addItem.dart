@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:counter_flutter/models/authentication.dart';
+import 'package:counter_flutter/services/dbFuture.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
@@ -8,6 +9,7 @@ import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
 import 'package:provider/provider.dart';
 import 'package:counter_flutter/models/authentication.dart';
 import 'manageItems.dart';
+import '../../../../models/earrings.dart';
 
 void main() => runApp(chooseWidget('splashRoute'));
 
@@ -57,13 +59,20 @@ class _SplashScreenState extends State<SplashScreen> {
   Map<String, String> _authData = {'email': '', 'password': ''};
 
   Future<void> _submit() async {
-    if (!_formKey.currentState.validate()) {
-      return;
-    }
     _formKey.currentState.save();
 
-    await Provider.of<Authentication>(context, listen: false)
-        .signUp(_authData['email'], _authData['password']);
+    Earrings earrings = Earrings(
+      name: earringName.text,
+      type: _selectedType,
+      price: int.parse(price.text),
+      outOfStock: false,
+      thumbnail: ''
+    );
+    String status = await DBFuture().addEarrings(earrings);
+    if(status == "success"){
+      print("SUCCESS");
+    }
+
   }
 
   @override
@@ -121,16 +130,14 @@ class _SplashScreenState extends State<SplashScreen> {
                               style: TextStyle(fontSize: 17),
                             ),
                           ),
-                              SizedBox(height: size.height * 0.03),
+                          SizedBox(height: size.height * 0.03),
                           Container(
                             width: 400,
                             child: Center(
-
                                 child: DropdownButton(
-                                    isExpanded:true,
+                                    isExpanded: true,
                                     hint: Text('Select an earring type'),
                                     value: _selectedType,
-
                                     onChanged: (newVal) {
                                       setState(() {
                                         _selectedType = newVal;

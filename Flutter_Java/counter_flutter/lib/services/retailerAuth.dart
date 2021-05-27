@@ -16,6 +16,7 @@ class retailerAuth {
           email: email.trim(), password: password);
       curRetailer = await DBFuture().getRetailInfo(authResult.user.uid);
       if (curRetailer != null) {
+
         retVal = "success";
       }
     } on PlatformException catch (e) {

@@ -77,6 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
       }
 
       if (_returnString == "success") {
+
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
