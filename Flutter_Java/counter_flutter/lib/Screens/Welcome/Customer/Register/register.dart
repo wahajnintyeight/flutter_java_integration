@@ -7,7 +7,7 @@ import 'package:counter_flutter/Screens/Welcome/welcome.dart';
 import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
 import 'package:provider/provider.dart';
 import 'package:counter_flutter/models/authentication.dart';
-
+import '../../../Home/home.dart';
 void main() => runApp(chooseWidget('splashRoute'));
 
 Widget chooseWidget(String route) {
@@ -163,6 +163,11 @@ class _SplashScreenState extends State<SplashScreen> {
                                 child: Text('Register'),
                                 onPressed: () {
                                   _submit();
+
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                    return CusHome();
+                                  }));
+
                                 },
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),

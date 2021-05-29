@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:counter_flutter/models/authentication.dart';
 import 'manageItems.dart';
 import '../../../../models/earrings.dart';
+import 'dart:async';
 
 void main() => runApp(chooseWidget('splashRoute'));
 
@@ -62,17 +63,15 @@ class _SplashScreenState extends State<SplashScreen> {
     _formKey.currentState.save();
 
     Earrings earrings = Earrings(
-      name: earringName.text,
-      type: _selectedType,
-      price: int.parse(price.text),
-      outOfStock: false,
-      thumbnail: ''
-    );
+        name: earringName.text,
+        type: _selectedType,
+        price: int.parse(price.text),
+        outOfStock: false,
+        thumbnail: '');
     String status = await DBFuture().addEarrings(earrings);
-    if(status == "success"){
+    if (status == "success") {
       print("SUCCESS");
     }
-
   }
 
   @override
@@ -158,6 +157,14 @@ class _SplashScreenState extends State<SplashScreen> {
                                 child: Text('Add'),
                                 onPressed: () {
                                   _submit();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text("Item has been added!"),
+                                      duration: Duration(seconds: 4),
+                                    ),
+                                  );
+                                  var duration = Duration(seconds: 5);
+                                  Timer(duration, manageItemPage);
                                 },
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
@@ -268,5 +275,11 @@ class _SplashScreenState extends State<SplashScreen> {
                 //     )),
               ],
             )));
+  }
+
+  manageItemPage() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return ManageItems();
+    }));
   }
 }
