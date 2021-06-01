@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         CustomArFragment arFragment = (CustomArFragment) getSupportFragmentManager().findFragmentById(R.id.arFragment);
         ModelRenderable.builder()
-                .setSource(this, R.raw.ringearrings)
+                .setSource(this, R.raw.earrings1)
                 .build()
                 .thenAccept(modelRenderable -> {
                     this.modelRenderable = modelRenderable;

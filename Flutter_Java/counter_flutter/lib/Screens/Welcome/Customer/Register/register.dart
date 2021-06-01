@@ -8,6 +8,8 @@ import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
 import 'package:provider/provider.dart';
 import 'package:counter_flutter/models/authentication.dart';
 import '../../../Home/home.dart';
+import '../../../../services/customerAuth.dart';
+
 void main() => runApp(chooseWidget('splashRoute'));
 
 Widget chooseWidget(String route) {
@@ -51,7 +53,9 @@ class _SplashScreenState extends State<SplashScreen> {
   TextEditingController FnameController = TextEditingController();
   TextEditingController EmailController = TextEditingController();
   TextEditingController passwordController = new TextEditingController();
-
+  TextEditingController fullName = TextEditingController();
+  TextEditingController userName = TextEditingController();
+  TextEditingController phoneNum = TextEditingController();
   TextEditingController password2Controller = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
 
@@ -65,6 +69,26 @@ class _SplashScreenState extends State<SplashScreen> {
 
     await Provider.of<Authentication>(context, listen: false)
         .signUp(_authData['email'], _authData['password']);
+  }
+
+  void _signUpCustomer(String email, String password, BuildContext context,
+      String fullName, String userName, String phoneNum) async {
+    try {
+      String _returnString = await customerAuth()
+          .signUpCustomer(email, password, fullName, userName, phoneNum);
+      if (_returnString == "success") {
+        Navigator.pop(context);
+      } else {
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text(_returnString),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -86,7 +110,7 @@ class _SplashScreenState extends State<SplashScreen> {
             padding: EdgeInsets.all(10),
             child: ListView(
               children: <Widget>[
-                SizedBox(height: size.height * 0.15),
+                SizedBox(height: size.height * 0.010),
                 Container(
                     alignment: Alignment.center,
                     padding: EdgeInsets.all(10),
@@ -94,7 +118,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       'Sign Up',
                       style: TextStyle(fontSize: 20),
                     )),
-                SizedBox(height: size.height * 0.03),
+                SizedBox(height: size.height * 0.006),
                 Container(
                     padding: EdgeInsets.all(10),
                     child: Form(
@@ -106,6 +130,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           TextFormField(
                             decoration: InputDecoration(labelText: 'Email'),
                             keyboardType: TextInputType.emailAddress,
+                            controller:EmailController,
                             validator: (value) {
                               if (value.isEmpty || !value.contains('@')) {
                                 return 'Invalid Email';
@@ -113,10 +138,29 @@ class _SplashScreenState extends State<SplashScreen> {
                               return null;
                             },
                             onSaved: (value) {
-                              _authData['email'] = value;
+                              // _authData['email'] = value;
+                              EmailController.text = value;
                             },
                           ),
-                          SizedBox(height: size.height * 0.05),
+                          SizedBox(height: size.height * 0.035),
+                          TextFormField(
+                            decoration: InputDecoration(labelText: 'Full Name'),
+                            keyboardType: TextInputType.text,
+                            controller: FnameController,
+                          ),
+                          SizedBox(height: size.height * 0.035),
+                          TextFormField(
+                            decoration: InputDecoration(labelText: 'Username'),
+                            keyboardType: TextInputType.text,
+                            controller: UnameController,
+                          ),
+                          SizedBox(height: size.height * 0.035),
+                              TextFormField(
+                                decoration: InputDecoration(labelText: 'Phonenumber'),
+                                keyboardType: TextInputType.text,
+                                controller: phoneNum,
+                              ),
+                              SizedBox(height: size.height * 0.035),
                           //password
                           TextFormField(
                             decoration: InputDecoration(labelText: 'Password'),
@@ -130,13 +174,15 @@ class _SplashScreenState extends State<SplashScreen> {
                             },
                             onSaved: (value) {
                               _authData['password'] = value;
+                              passwordController.text = value;
                             },
                           ),
-                          SizedBox(height: size.height * 0.05),
+                          SizedBox(height: size.height * 0.035),
                           TextFormField(
                             decoration:
                                 InputDecoration(labelText: 'Confirm Password'),
                             obscureText: true,
+                            controller: password2Controller,
                             validator: (value) {
                               if (value.isEmpty ||
                                   value != passwordController.text) {
@@ -144,7 +190,9 @@ class _SplashScreenState extends State<SplashScreen> {
                               }
                               return null;
                             },
-                            onSaved: (value) {},
+                            onSaved: (value) {
+                              password2Controller.text = value;
+                            },
                           ),
 
                           // FlatButton(
@@ -154,7 +202,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           //   textColor: Colors.blue,
                           //   child: Text('Forgot Password'),
                           // ),
-                          SizedBox(height: size.height * 0.05),
+                          SizedBox(height: size.height * 0.035),
                           Container(
                             width: 190,
                             height: 50,
@@ -162,12 +210,25 @@ class _SplashScreenState extends State<SplashScreen> {
                                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                                 child: Text('Register'),
                                 onPressed: () {
-                                  _submit();
+                                  print(EmailController.text);
+                                  print(passwordController.text);
+                                  print(password2Controller.text);
+                                  print(UnameController.text);
+                                  print(phoneNum.text);
+                                  print(FnameController.text);
 
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  _signUpCustomer(
+                                      EmailController.text,
+                                      passwordController.text,
+                                      context,
+                                      FnameController.text,
+                                      UnameController.text,
+                                      phoneNum.text);
+
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
                                     return CusHome();
                                   }));
-
                                 },
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
@@ -263,7 +324,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 //     ),
                 //   ),
                 // ),
-                SizedBox(height: size.height * 0.05),
+                SizedBox(height: size.height * 0.035),
                 // Container(
                 //     height: 50,
                 //     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
