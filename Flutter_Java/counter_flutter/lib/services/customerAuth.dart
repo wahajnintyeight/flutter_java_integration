@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 
 class customerAuth {
   FirebaseAuth _auth = FirebaseAuth.instance;
-  Customer curRetailer = Customer();
+  Customer curCustomer = Customer();
 
   Future<String> loginUserWithEmail(String email, String password) async {
     String retVal = "error";
@@ -15,8 +15,8 @@ class customerAuth {
     try {
       AuthResult authResult = await _auth.signInWithEmailAndPassword(
           email: email.trim(), password: password);
-      curRetailer = await DBFuture().getCustomerInfo(authResult.user.uid);
-      if (curRetailer != null) {
+      curCustomer = await DBFuture().getCustomerInfo(authResult.user.uid);
+      if (curCustomer != null) {
         retVal = "success";
       }
     } on PlatformException catch (e) {
@@ -26,6 +26,39 @@ class customerAuth {
       print(e);
     }
 
+    return retVal;
+  }
+
+
+  Future<Customer> returnCustomerID(String email, String password) async {
+    String retVal = "error";
+
+    try {
+      AuthResult authResult = await _auth.signInWithEmailAndPassword(
+          email: email.trim(), password: password);
+      curCustomer = await DBFuture().getCustomerInfo(authResult.user.uid);
+      if (curCustomer != null) {
+       retVal = authResult.user.uid;
+      }
+    } on PlatformException catch (e) {
+
+      retVal = e.message;
+    } catch (e) {
+      print(e);
+    }
+
+    return curCustomer;
+  }
+
+  Future<String> signOut() async {
+    String retVal = "error";
+
+    try {
+      await _auth.signOut();
+      retVal = "success";
+    } catch (e) {
+      print(e);
+    }
     return retVal;
   }
 

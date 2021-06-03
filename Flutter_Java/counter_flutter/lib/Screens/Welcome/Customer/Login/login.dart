@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:counter_flutter/Screens/Home/mainpage.dart';
 import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
 import 'package:counter_flutter/Screens/Welcome/Customer/Register/register.dart';
+import 'package:counter_flutter/models/customer.dart';
+import 'package:counter_flutter/services/customerAuth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
@@ -10,6 +12,7 @@ import 'package:counter_flutter/Screens/Home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:counter_flutter/models/authentication.dart';
+import '../../../../models/currentCustomerID.dart';
 
 void main() => runApp(chooseWidget('splashRoute'));
 
@@ -74,21 +77,33 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _submit() async {
+    String _returnString;
+    String cusID;
+    Customer customerInfo;
     if (!_formKey.currentState.validate()) {
       return;
     }
     _formKey.currentState.save();
 
     try {
-      await Provider.of<Authentication>(context, listen: false)
-          .signIn(_authData['email'], _authData['password']);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) {
-          return CusHome();
-        }),
+      // await Provider.of<Authentication>(context, listen: false)
+      //     .signIn(_authData['email'], _authData['password']);
 
-      );
+      _returnString = await customerAuth()
+          .loginUserWithEmail(_authData['email'], _authData['password']);
+      customerInfo = await customerAuth()
+          .returnCustomerID(_authData['email'], _authData['password']);
+      //current customer class
+      final currCIDs = currCID(cID: customerInfo.cID,fName: customerInfo.fName); //CURRENT CUSTOMER ID
+      if (_returnString == "success") {
+        // print(cusID);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return CusHome(customerID: currCIDs);
+          }),
+        );
+      }
     } catch (error) {
       var errorMessage = 'Authentication Failed. Please try again later.';
       _showErrorDialog(errorMessage);

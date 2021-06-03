@@ -2,11 +2,15 @@ import 'dart:ui';
 
 import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
 import 'package:counter_flutter/Screens/Welcome/Customer/Register/register.dart';
+import 'package:counter_flutter/models/currentCustomerID.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Welcome/welcome.dart';
 import 'package:flutter/rendering.dart';
 import 'package:counter_flutter/Screens/Home/mainpage.dart';
+import '../../Screens/Welcome/Customer/Welcome/welcome.dart';
+import '../../services/customerAuth.dart';
+import '../../models/currentCustomerID.dart';
 
 void main() => runApp(chooseWidget('splashRoute'));
 
@@ -39,12 +43,27 @@ Widget chooseWidget(String route) {
 
 class CusHome extends StatefulWidget {
   // final JewelryType jT;
+  final currCID customerID;
 
+  CusHome({this.customerID});
   // const CusHome({Key key, this.jT}) : super(key: key);
-  CusHome() {}
+  // CusHome() {}
 
   @override
   _CusHomeState createState() => _CusHomeState();
+}
+
+void _signOut(BuildContext context) async {
+  String _returnString = await customerAuth().signOut();
+  if (_returnString == "success") {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CusWelcome(),
+      ),
+      (route) => false,
+    );
+  }
 }
 
 class _CusHomeState extends State<CusHome> {
@@ -56,7 +75,7 @@ class _CusHomeState extends State<CusHome> {
 //     obj.jID = index;
 //     return obj;
 //   });
-
+//    final currCID customerID;
   final jewelryTitle = List<JewelryType>.generate(
     20,
     (i) => JewelryType.foo(i),
@@ -96,7 +115,7 @@ class _CusHomeState extends State<CusHome> {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
-            title: Text("Shop 'n' Preview"),
+            title: Text("Shop 'n' Preview" ),
             centerTitle: true,
           ),
           drawer: Drawer(
@@ -124,7 +143,7 @@ class _CusHomeState extends State<CusHome> {
                               ),
                             ),
                             Text(
-                              'Customer',
+                              widget.customerID.fName,
                               style: TextStyle(
                                   color: Colors.white, fontSize: 25.0),
                             )
@@ -146,9 +165,22 @@ class _CusHomeState extends State<CusHome> {
                       title: Text('Settings'),
                     ),
                     SizedBox(height: 20),
-                    ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text('Log Out'),
+                    RaisedButton(
+                      child: ListTile(
+                          leading: Icon(Icons.settings),
+                          title: Text('Log Out'),
+                          onTap: () {
+                            _signOut(context);
+                          }
+
+                          // onTap: () =>
+                          //
+                          // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          // return CusWelcome();
+                          // }
+                          // )
+
+                          ),
                     )
                   ],
                 )),
