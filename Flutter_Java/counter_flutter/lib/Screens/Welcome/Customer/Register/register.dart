@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:counter_flutter/Screens/Welcome/Customer/Login/login.dart';
 import 'package:counter_flutter/models/authentication.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,13 +72,19 @@ class _SplashScreenState extends State<SplashScreen> {
         .signUp(_authData['email'], _authData['password']);
   }
 
-  void _signUpCustomer(String email, String password, BuildContext context,
-      String fullName, String userName, String phoneNum) async {
+  Future<String> _signUpCustomer(
+      String email,
+      String password,
+      BuildContext context,
+      String fullName,
+      String userName,
+      String phoneNum) async {
     try {
       String _returnString = await customerAuth()
           .signUpCustomer(email, password, fullName, userName, phoneNum);
       if (_returnString == "success") {
         Navigator.pop(context);
+        return "SUC";
       } else {
         Scaffold.of(context).showSnackBar(
           SnackBar(
@@ -89,6 +96,7 @@ class _SplashScreenState extends State<SplashScreen> {
     } catch (e) {
       print(e);
     }
+    return "FAIL";
   }
 
   @override
@@ -130,7 +138,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           TextFormField(
                             decoration: InputDecoration(labelText: 'Email'),
                             keyboardType: TextInputType.emailAddress,
-                            controller:EmailController,
+                            controller: EmailController,
                             validator: (value) {
                               if (value.isEmpty || !value.contains('@')) {
                                 return 'Invalid Email';
@@ -155,12 +163,13 @@ class _SplashScreenState extends State<SplashScreen> {
                             controller: UnameController,
                           ),
                           SizedBox(height: size.height * 0.035),
-                              TextFormField(
-                                decoration: InputDecoration(labelText: 'Phonenumber'),
-                                keyboardType: TextInputType.text,
-                                controller: phoneNum,
-                              ),
-                              SizedBox(height: size.height * 0.035),
+                          TextFormField(
+                            decoration:
+                                InputDecoration(labelText: 'Phonenumber'),
+                            keyboardType: TextInputType.text,
+                            controller: phoneNum,
+                          ),
+                          SizedBox(height: size.height * 0.035),
                           //password
                           TextFormField(
                             decoration: InputDecoration(labelText: 'Password'),
@@ -209,26 +218,28 @@ class _SplashScreenState extends State<SplashScreen> {
                             child: RaisedButton(
                                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                                 child: Text('Register'),
-                                onPressed: () {
+                                onPressed: () async {
                                   print(EmailController.text);
                                   print(passwordController.text);
                                   print(password2Controller.text);
                                   print(UnameController.text);
                                   print(phoneNum.text);
                                   print(FnameController.text);
-
-                                  _signUpCustomer(
+                                  String returnMsg = await _signUpCustomer(
                                       EmailController.text,
                                       passwordController.text,
                                       context,
                                       FnameController.text,
                                       UnameController.text,
                                       phoneNum.text);
-
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return CusHome();
-                                  }));
+                                  if (returnMsg == "SUC") {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return CusLogin();
+                                    }));
+                                  } else {
+                                    print("FAILURE");
+                                  }
                                 },
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
