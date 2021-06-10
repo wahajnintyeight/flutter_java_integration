@@ -6,6 +6,7 @@ import '../models/customer.dart';
 
 class DBFuture {
   Firestore _firestore = Firestore.instance;
+  CollectionReference _earringsRef = Firestore.instance.collection('earrings');
 
   //SIGN UP RETAILER
   Future<String> createUser(Retailer user) async {
@@ -26,8 +27,6 @@ class DBFuture {
     return retVal;
   }
 
-
-
   Future<String> createCustomer(Customer user) async {
     String retVal = "error";
 
@@ -45,7 +44,6 @@ class DBFuture {
 
     return retVal;
   }
-
 
   Future<String> addEarrings(Earrings earrings) async {
     String retVal = "error";
@@ -65,6 +63,14 @@ class DBFuture {
     }
 
     return retVal;
+  }
+
+  Future<List> returnEarrings() async {
+    QuerySnapshot querySnapshot = await _earringsRef.getDocuments();
+
+    // Get data from docs and convert map to List
+    List allData = querySnapshot.documents.map((doc) => doc.data).toList();
+    return allData;
   }
 
   Future<Customer> getCustomerInfo(String cID) async {

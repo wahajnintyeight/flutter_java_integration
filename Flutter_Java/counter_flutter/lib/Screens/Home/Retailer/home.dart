@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:counter_flutter/Screens/Home/Retailer/ManageItems/viewItems.dart';
 import 'package:counter_flutter/Screens/Welcome/Customer/Register/register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +97,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) {
-                            return retailLogin();
+                            return RetailerViewItems();
                           }),
 
                           // print(nameController.text);
