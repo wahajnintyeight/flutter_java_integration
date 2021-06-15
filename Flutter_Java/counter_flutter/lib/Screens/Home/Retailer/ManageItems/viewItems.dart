@@ -69,13 +69,16 @@ class RetailerViewItems extends StatefulWidget {
 
 class _RetailerViewItemsState extends State<RetailerViewItems> {
 //    final currCID customerID;
-
+  Future<List> earrings;
+  List earring;
   @override
-  void initState() {
+  Future<void> initState()  async {
     // TODO: implement initState
     // RetailerViewItems();
 
     super.initState();
+    earring = await DBFuture().returnEarrings();
+    // earring = await DBFuture().returnEarrings();
   }
 
   @override
@@ -87,6 +90,8 @@ class _RetailerViewItemsState extends State<RetailerViewItems> {
       "assets/images/silver.png",
     ];
 
+
+    // List eID = DBFuture().returnEarrings();
     Size size = MediaQuery.of(context).size;
     final double itemHeight = (size.height - kToolbarHeight - 35) / 3;
     final double itemWidth = size.width / 2.1;
@@ -203,10 +208,12 @@ class _RetailerViewItemsState extends State<RetailerViewItems> {
                                 return Container(
                                   padding: EdgeInsets.all(20.0),
                                   child: InkResponse(
-                                    onTap: () {
+                                    onTap: () async {
                                       // print(jewelryTitle[index]);
                                       // print(returnEarrings().toString());
 
+                                      print(earring.length);
+                                      // print(eID[2]);
                                       // Navigator.of(context).push(
                                       //     MaterialPageRoute(
                                       //         builder: (context) =>
@@ -214,8 +221,6 @@ class _RetailerViewItemsState extends State<RetailerViewItems> {
                                       //             // jT: jewelryTitle[index])
                                       //     ));
                                       // print(DBFuture().returnEarrings());
-                                      Future<List> data =  DBFuture().returnEarrings();
-                                      // print(data[0]);
                                     },
                                     child: Center(
                                       child: GridTile(
@@ -223,7 +228,9 @@ class _RetailerViewItemsState extends State<RetailerViewItems> {
                                             // 'SubItem $index',
                                             // jewelryTitle[index].jewelryType,
                                             // textAlign: TextAlign.center,
-                                            "Jewl"),
+                                            //earring[0]
+
+                                            "ss"),
                                         child: Container(
                                           padding:
                                               EdgeInsets.fromLTRB(0, 1, 0, 0),

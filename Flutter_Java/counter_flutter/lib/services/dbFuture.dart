@@ -69,7 +69,19 @@ class DBFuture {
     QuerySnapshot querySnapshot = await _earringsRef.getDocuments();
 
     // Get data from docs and convert map to List
+    // List allData = querySnapshot.documents.map((doc) => doc.data).toList();
     List allData = querySnapshot.documents.map((doc) => doc.data).toList();
+    // return allData;
+    // print(allData[0]);
+    return allData;
+  }
+
+  Future<List> returnEarringsID() async {
+    QuerySnapshot querySnapshot = await _earringsRef.getDocuments();
+
+    // Get data from docs and convert map to List
+    List allData =
+        querySnapshot.documents.map((doc) => doc.documentID).toList();
     return allData;
   }
 
