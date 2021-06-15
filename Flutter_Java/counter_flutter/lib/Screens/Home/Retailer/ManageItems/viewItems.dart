@@ -160,117 +160,119 @@ class _RetailerViewItemsState extends State<RetailerViewItems> {
 
                       child: Column(
                         children: [
-                          // Expanded(
-                          //   child: GridView.builder(
-                          //     itemCount: images.length,
-                          //     shrinkWrap: true,
-                          //     gridDelegate:
-                          //         SliverGridDelegateWithFixedCrossAxisCount(
-                          //       crossAxisCount: 2,
-                          //       crossAxisSpacing: 4.0,
-                          //       childAspectRatio: (itemWidth / itemHeight),
-                          //       mainAxisSpacing: 5.0,
-                          //     ),
-                          //     itemBuilder: (BuildContext context, int index) {
-                          //       // return Image.asset(images[index]);
-                          //       return Container(
-                          //         padding: EdgeInsets.all(20.0),
-                          //         child: InkResponse(
-                          //           onTap: () {
-                          //             // print(earring.length);
-                          //             earrings =  DBFuture().returnEarrings();
-                          //             print(earrings);
-                          //           },
-                          //           child: Center(
-                          //             child: GridTile(
-                          //               footer: Text("ss"),
-                          //               child: Container(
-                          //                 padding:
-                          //                     EdgeInsets.fromLTRB(0, 1, 0, 0),
-                          //                 margin: EdgeInsets.all(4),
-                          //                 child: Column(
-                          //                   children: [
-                          //                     SizedBox(
-                          //                         height: size.height * 0.001),
-                          //                     Image.asset(images[index]),
-                          //                   ],
-                          //                 ),
-                          //               ),
-                          //             ),
-                          //           ),
-                          //         ),
-                          //         color: Colors.grey[200],
-                          //         margin: EdgeInsets.all(1.0),
-                          //       );
-                          //     },
-                          //   ),
-                          // ),
-
                           Expanded(
-                            child: FutureBuilder(
-                                future: DBFuture().returnEarrings(),
-                                builder: (context, AsyncSnapshot snapshot)
-                                {
-                                  if (!snapshot.hasData)
-                                  {
-                                    return null;
-                                  }
-                                  else
-                                    {
-                                    return Container(
-                                        child: ListView.builder(
-                                            itemCount: snapshot.data.length,
-                                            scrollDirection: Axis.horizontal,
-                                            itemBuilder: (BuildContext context,int index) {
-                                              // return Text(
-                                              //     '${snapshot.data[index]["name"]}'
-                                              // );
-                                              return GridView.builder(
-                                                itemCount: snapshot.data.length,
-                                                shrinkWrap: true,
-                                                gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  crossAxisSpacing: 4.0,
-                                                  childAspectRatio: (itemWidth / itemHeight),
-                                                  mainAxisSpacing: 5.0,
-                                                ),
-                                                itemBuilder: (BuildContext context, int index)
-                                                {
-                                                  // return Image.asset(images[index]);
-                                                  return Container(
-                                                    padding: EdgeInsets.all(20.0),
-                                                    child: InkResponse(
-                                                      onTap: () {
-                                                        // print(earring.length);
-                                                      },
-                                                      child: Center(
-                                                        child: GridTile(
-                                                          footer: Text('${snapshot.data[index]["name"]}'),
-                                                          child: Container(
-                                                            padding:
-                                                            EdgeInsets.fromLTRB(0, 1, 0, 0),
-                                                            margin: EdgeInsets.all(4),
-                                                            child: Column(
-                                                              children: [
-                                                                SizedBox(
-                                                                    height: size.height * 0.001),
-                                                                Image.asset(images[1]),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    color: Colors.grey[200],
-                                                    margin: EdgeInsets.all(1.0),
-                                                  );
-                                                },
-                                              );
-                                            }));
-                                  }
-                                }),
+                            child: GridView.builder(
+                              itemCount: images.length,
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 4.0,
+                                childAspectRatio: (itemWidth / itemHeight),
+                                mainAxisSpacing: 5.0,
+                              ),
+                              itemBuilder: (BuildContext context, int index) {
+                                // return Image.asset(images[index]);
+                                return Container(
+                                  padding: EdgeInsets.all(20.0),
+                                  child: InkResponse(
+                                    onTap: () {
+                                      // print(earring.length);
+                                      earrings =  DBFuture().returnEarrings();
+                                      print(earrings);
+                                    },
+                                    child: Center(
+                                      child: GridTile(
+                                        footer: Text("ss"),
+                                        child: Container(
+                                          padding:
+                                              EdgeInsets.fromLTRB(0, 1, 0, 0),
+                                          margin: EdgeInsets.all(4),
+                                          child: Column(
+                                            children: [
+                                              SizedBox(
+                                                  height: size.height * 0.001),
+                                              Image.asset(images[index]),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  color: Colors.grey[200],
+                                  margin: EdgeInsets.all(1.0),
+                                );
+                              },
+                            ),
                           ),
+
+
+                          //NEWLY ADDED!!!!!!!!!!!
+                          // Expanded(
+                          //   child: FutureBuilder(
+                          //       future: DBFuture().returnEarrings(),
+                          //       builder: (context, AsyncSnapshot snapshot)
+                          //       {
+                          //         if (!snapshot.hasData)
+                          //         {
+                          //           return null;
+                          //         }
+                          //         else
+                          //           {
+                          //           return Container(
+                          //               child: ListView.builder(
+                          //                   itemCount: snapshot.data.length,
+                          //                   scrollDirection: Axis.horizontal,
+                          //                   itemBuilder: (BuildContext context,int index) {
+                          //                     // return Text(
+                          //                     //     '${snapshot.data[index]["name"]}'
+                          //                     // );
+                          //                     return GridView.builder(
+                          //                       itemCount: snapshot.data.length,
+                          //                       shrinkWrap: true,
+                          //                       gridDelegate:
+                          //                       SliverGridDelegateWithFixedCrossAxisCount(
+                          //                         crossAxisCount: 2,
+                          //                         crossAxisSpacing: 4.0,
+                          //                         childAspectRatio: (itemWidth / itemHeight),
+                          //                         mainAxisSpacing: 5.0,
+                          //                       ),
+                          //                       itemBuilder: (BuildContext context, int index)
+                          //                       {
+                          //                         // return Image.asset(images[index]);
+                          //                         return Container(
+                          //                           padding: EdgeInsets.all(20.0),
+                          //                           child: InkResponse(
+                          //                             onTap: () {
+                          //                               // print(earring.length);
+                          //                             },
+                          //                             child: Center(
+                          //                               child: GridTile(
+                          //                                 footer: Text('${snapshot.data[index]["name"]}'),
+                          //                                 child: Container(
+                          //                                   padding:
+                          //                                   EdgeInsets.fromLTRB(0, 1, 0, 0),
+                          //                                   margin: EdgeInsets.all(4),
+                          //                                   child: Column(
+                          //                                     children: [
+                          //                                       SizedBox(
+                          //                                           height: size.height * 0.001),
+                          //                                       Image.asset(images[1]),
+                          //                                     ],
+                          //                                   ),
+                          //                                 ),
+                          //                               ),
+                          //                             ),
+                          //                           ),
+                          //                           color: Colors.grey[200],
+                          //                           margin: EdgeInsets.all(1.0),
+                          //                         );
+                          //                       },
+                          //                     );
+                          //                   }));
+                          //         }
+                          //       }),
+                          // ),
                         ],
                       ),
                     )
