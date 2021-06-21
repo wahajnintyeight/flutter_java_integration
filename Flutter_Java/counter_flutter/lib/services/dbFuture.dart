@@ -76,6 +76,10 @@ class DBFuture {
     return allData;
   }
 
+
+
+
+
   Future<List> returnEarringsID() async {
     QuerySnapshot querySnapshot = await _earringsRef.getDocuments();
 
