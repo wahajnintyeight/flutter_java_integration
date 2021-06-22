@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:counter_flutter/Screens/Home/home.dart';
 import 'package:counter_flutter/Screens/Home/home.dart';
 import 'package:counter_flutter/Screens/Welcome/Customer/Welcome/welcome.dart';
+import 'package:counter_flutter/services/dbFuture.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:counter_flutter/Screens/Welcome/Designer/Welcome/dzwelcome.dart';
 import 'package:counter_flutter/Screens/Welcome/Retailer/Welcome/retailwelcome.dart';
@@ -15,8 +16,7 @@ import 'home.dart';
 import 'package:counter_flutter/Screens/Home/theme/colors.dart';
 import 'home.dart';
 import 'package:counter_flutter/Screens/Home/productdetail.dart';
-import 'home.dart';
-import '../../services/dbFuture.dart';
+
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MainPageCus(),
@@ -53,19 +53,27 @@ class _MainPageCusState extends State<MainPageCus> {
     String jName = widget.jT.jewelryType;
     String ID = widget.jT.jID.toString();
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () =>
-              // Navigator.push(context, MaterialPageRoute(builder: (context) {
-              //   return CusHome();
-              // })),
-          Navigator.pop(context)
-        ),
-        title: Text("Shop 'N' Preview"),
-        centerTitle: true,
-      ),
-
+        // body: Padding(
+        //     padding: EdgeInsets.all(10),
+        //     child: ListView(
+        //       children: <Widget>[
+        //         SizedBox(height: size.height * 0.05),
+        //         Container(
+        //             alignment: Alignment.center,
+        //             padding: EdgeInsets.all(10),
+        //             child: Text(
+        //               "Shop 'N' Preview",
+        //               style: TextStyle(
+        //                   color: Colors.blue,
+        //                   fontWeight: FontWeight.w500,
+        //                   fontSize: 30),
+        //             )),
+        //         SizedBox(height: size.height * 0.05),
+        //         Text(widget.jT.jewelryType),
+        //         SizedBox(height: size.height * 0.05),
+        //         Text(widget.jT.jID.toString())
+        //       ],
+        //     )));
         body: SafeArea(
       child: ListView(
         children: <Widget>[
@@ -97,91 +105,136 @@ class _MainPageCusState extends State<MainPageCus> {
             scrollDirection: Axis.horizontal,
             child: Padding(
               padding: const EdgeInsets.only(right: 20, left: 20),
-
+              // child: Row(
+              //     children: List.generate(menuItems.length, (index) {
+              //   return Padding(
+              //     padding: const EdgeInsets.only(right: 20),
+              //     child: InkWell(
+              //       onTap: () {
+              //         setState(() {
+              //           activeMenu = index;
+              //         });
+              //       },
+              //       child: Container(
+              //         decoration: BoxDecoration(
+              //             border: Border(
+              //                 bottom: BorderSide(
+              //                     color: activeMenu == index
+              //                         ? primary
+              //                         : Colors.transparent,
+              //                     width: 2))),
+              //         child: Padding(
+              //           padding: const EdgeInsets.all(8.0),
+              //           child: Text(
+              //             menuItems[index],
+              //             style: TextStyle(fontSize: 17),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   );
+              // })),
             ),
           ),
           SizedBox(
             height: 30,
           ),
-          Wrap(
-            children: FutureBuilder(
-                // dataItems.length, (index)
+          Container(child: Container(child: FutureBuilder(
             future: DBFuture().returnEarrings(),
-                builder: (context, AsyncSnapshot snapshot)
-            {
-              if(!snapshot.hasData)
-                {
-                  return Container(width:0.0,height:0.0);
-                }
-              else if(snapshot[index]["Type"]==jName)
-              {
-                return InkWell(
-                  onTap: ()
-                  {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (_) =>
-                    //             ProductDetailPage(
-                    //               id: dataItems[index]['id'].toString(),
-                    //               name: dataItems[index]['name'],
-                    //               code: dataItems[index]['code'],
-                    //               img: dataItems[index]['img'],
-                    //               price: dataItems[index]['price'].toString(),
-                    //               promotionPrice: dataItems[index]
-                    //               ['promotionPrice']
-                    //                   .toString(),
-                    //               size: dataItems[index]['size'],
-                    //               color: dataItems[index]['color'],
-                    //             )));
-                  },
-                  child: Card(
-                      elevation: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          // Hero(
-                          //   tag: dataItems[index]['id'].toString(),
-                          //   child: Container(
-                          //     width: (size.width - 16) / 2,
-                          //     height: (size.width - 16) / 2,
-                          //     decoration: BoxDecoration(
-                          //         image: DecorationImage(
-                          //             image:
-                          //             AssetImage(dataItems[index]['img']),
-                          //             fit: BoxFit.cover)),
-                          //   ),
-                          // )
-                          // SizedBox(
-                          //   height: 15,
-                          // ),
-                          // Padding(
-                          //   padding: const EdgeInsets.only(left: 15),
-                          //   child: Text(
-                          //     dataItems[index]['code'],
-                          //     style: TextStyle(fontSize: 16),
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: 10,
-                          // ),
-                          // Padding(
-                          //   padding: const EdgeInsets.only(left: 15),
-                          //   child: Text(
-                          //     dataItems[index]['price'].toString() + " USD",
-                          //     style: TextStyle(fontSize: 16),
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: 10,
-                          // ),
-                        ],
-                      )),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (!snapshot.hasData) {
+                return Container(width: 0.0, height: 0.0);
+              } else {
+
+                return Container(
+                  child: ListView.builder(
+                    itemCount: 3,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (snapshot.data[index]["type"] == jName) {
+
+
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        ProductDetailPage(
+                                          id: dataItems[index]['id'].toString(),
+                                          name: dataItems[index]['name'],
+                                          code: dataItems[index]['code'],
+                                          img: dataItems[index]['img'],
+                                          price:
+                                          dataItems[index]['price'].toString(),
+                                          promotionPrice: dataItems[index]
+                                          ['promotionPrice']
+                                              .toString(),
+                                          size: dataItems[index]['size'],
+                                          color: dataItems[index]['color'],
+                                        )));
+                          },
+                          child: Card(
+                              elevation: 2,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Hero(
+                                    tag: snapshot.data[index]['name']
+                                        .toString(),
+                                    child: Container(
+                                      width: (size.width - 16) / 2,
+                                      height: (size.width - 16) / 2,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                  snapshot
+                                                      .data[index]['thumbnail']),
+                                              fit: BoxFit.cover)),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 15),
+                                    child: Text(
+                                      snapshot.data[index]['name'],
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 15),
+                                    child: Text(
+                                      snapshot.data[index]['price'].toString() +
+                                          " USD",
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              )),
+                        );
+                      }
+                        else{
+                          return Container(width:0.0,height:0.0);
+                        }
+                  }),
                 );
               }
-            }
-            ),
-          )
+              //    );
+            },
+          ))
+              //List.generate(dataItems.length, (index)
+              //{
+
+              //   }
+              //    ),
+              )
         ],
       ),
     ));
