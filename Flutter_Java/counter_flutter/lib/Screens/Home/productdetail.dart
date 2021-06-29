@@ -3,25 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Home/theme/colors.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  final String id;
+  //final String id;
   final String name;
-  final String code;
+  //final String code;
   final String img;
-  final String price;
-  final String promotionPrice;
-  final List size;
-  final List color;
+  final int price;
+  //final String promotionPrice;
+  // final List size;
+  final String type;
 
   const ProductDetailPage(
       {Key key,
-      this.id,
+      // this.id,
       this.name,
-      this.code,
+      // this.code,
       this.img,
       this.price,
-      this.promotionPrice,
-      this.size,
-      this.color})
+      //   this.promotionPrice,
+      //  this.size,
+      this.type})
       : super(key: key);
 
   @override
@@ -56,15 +56,43 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     return Container(
       height: 80,
       width: size.width,
-      child: FlatButton(
-          color: primary,
-          onPressed: () {
-            // your add cart here
-          },
-          child: Text(
-            "ADD TO CART",
-            style: TextStyle(fontSize: 18, color: white),
-          )),
+      child: Row(
+        children: [
+          FlatButton(
+              color: primary,
+              height: 100,
+              minWidth: 200,
+              onPressed: () {
+                // your add cart here
+              },
+              child: Row(
+                children: [
+                  Text(
+                    "ADD TO CART",
+                    style: TextStyle(fontSize: 18, color: white),
+                  ),
+                ],
+              )),
+          SizedBox(
+            height: 20,
+          ),
+          FlatButton(
+            height: 100,
+              minWidth: 192,
+              color: primary,
+              onPressed: () {
+                // your add cart here
+              },
+              child: Row(
+                children: [
+                  Text(
+                    "LIVE PREVIEW",
+                    style: TextStyle(fontSize: 18, color: white),
+                  ),
+                ],
+              )),
+        ],
+      ),
     );
   }
 
@@ -90,14 +118,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ),
             Card(
               elevation: 2,
-              child: Hero(
-                tag: widget.id.toString(),
-                child: Container(
-                  height: 400,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(activeImg), fit: BoxFit.cover)),
-                ),
+              child: Container(
+                height: 400,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: NetworkImage(widget.img), fit: BoxFit.cover)),
               ),
             ),
             SizedBox(
@@ -127,30 +152,30 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "Code :",
-                    style: TextStyle(fontSize: 16, height: 1.5),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Flexible(
-                    child: Text(
-                      widget.code,
-                      style: TextStyle(fontSize: 16, height: 1.5),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 20, right: 20),
+            //   child: Row(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: <Widget>[
+            //       Text(
+            //         "Code :",
+            //         style: TextStyle(fontSize: 16, height: 1.5),
+            //       ),
+            //       SizedBox(
+            //         width: 20,
+            //       ),
+            //       Flexible(
+            //         child: Text(
+            //           widget.code,
+            //           style: TextStyle(fontSize: 16, height: 1.5),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: 20,
+            // ),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Row(
@@ -166,21 +191,20 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   Flexible(
                       child: Row(
                     children: <Widget>[
-                      Text(
-                        widget.promotionPrice + " USD",
-                        style: TextStyle(fontSize: 16, height: 1.5),
-                      ),
+                      // Text(
+                      //   widget.price + " PKR",
+                      //   style: TextStyle(fontSize: 16, height: 1.5),
+                      // ),
                       SizedBox(
                         width: 20,
                       ),
                       Text(
-                        widget.price + " USD",
+                        widget.price.toString() + " pkr",
                         style: TextStyle(
                             fontSize: 20,
                             height: 1.5,
                             color: primary,
-                            fontWeight: FontWeight.w400,
-                            decoration: TextDecoration.lineThrough),
+                            fontWeight: FontWeight.w400),
                       )
                     ],
                   )),
@@ -190,105 +214,105 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "Size :",
-                    style: TextStyle(fontSize: 16, height: 1.5),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Flexible(
-                      child: Wrap(
-                          children: List.generate(widget.size.length, (index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 20),
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            activeSize = widget.size[index]['id'];
-                          });
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 2,
-                                color: activeSize == widget.size[index]['id']
-                                    ? primary
-                                    : Colors.transparent,
-                              ),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 12, bottom: 12, right: 15, left: 15),
-                            child: Text(
-                              widget.size[index]['value'],
-                              style: TextStyle(fontSize: 16, height: 1.5),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }))),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 20, right: 20),
+            //   child: Row(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: <Widget>[
+            //       Text(
+            //         "Size :",
+            //         style: TextStyle(fontSize: 16, height: 1.5),
+            //       ),
+            //       SizedBox(
+            //         width: 20,
+            //       ),
+            //       Flexible(
+            //           child: Wrap(
+            //               children: List.generate(widget.size.length, (index) {
+            //         return Padding(
+            //           padding: const EdgeInsets.only(right: 20),
+            //           child: InkWell(
+            //             onTap: () {
+            //               setState(() {
+            //                 activeSize = widget.size[index]['id'];
+            //               });
+            //             },
+            //             child: Container(
+            //               decoration: BoxDecoration(
+            //                   border: Border.all(
+            //                     width: 2,
+            //                     color: activeSize == widget.size[index]['id']
+            //                         ? primary
+            //                         : Colors.transparent,
+            //                   ),
+            //                   borderRadius: BorderRadius.circular(5)),
+            //               child: Padding(
+            //                 padding: const EdgeInsets.only(
+            //                     top: 12, bottom: 12, right: 15, left: 15),
+            //                 child: Text(
+            //                   widget.size[index]['value'],
+            //                   style: TextStyle(fontSize: 16, height: 1.5),
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //         );
+            //       }))),
+            //     ],
+            //   ),
+            // ),
             SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "Color :",
-                    style: TextStyle(fontSize: 16, height: 1.5),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Flexible(
-                      child: Wrap(
-                          children: List.generate(widget.color.length, (index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 20),
-                      child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            activeColor = widget.color[index]['id'];
-                            activeImg = widget.color[index]['value'];
-                          });
-                        },
-                        child: Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      widget.color[index]['value']),
-                                  fit: BoxFit.cover),
-                              border: Border.all(
-                                width: 2,
-                                color: activeColor == widget.color[index]['id']
-                                    ? primary
-                                    : Colors.transparent,
-                              ),
-                              borderRadius: BorderRadius.circular(5)),
-                        ),
-                      ),
-                    );
-                  }))),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 20, right: 20),
+            //   child: Row(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: <Widget>[
+            //       Text(
+            //         "Color :",
+            //         style: TextStyle(fontSize: 16, height: 1.5),
+            //       ),
+            //       SizedBox(
+            //         width: 20,
+            //       ),
+            //       Flexible(
+            //           child: Wrap(
+            //               children: List.generate(widget.type.length, (index) {
+            //         return Padding(
+            //           padding: const EdgeInsets.only(right: 20),
+            //           child: InkWell(
+            //             onTap: () {
+            //               setState(() {
+            //              //   activeColor = widget.color[index]['id'];
+            //                // activeImg = widget.color[index]['value'];
+            //               });
+            //             },
+            //             child: Container(
+            //               width: 50,
+            //               height: 50,
+            //               decoration: BoxDecoration(
+            //                   image: DecorationImage(
+            //                       image: AssetImage(
+            //                         ' ' // widget.color[index]['value']
+            //                       ),
+            //                       fit: BoxFit.cover),
+            //                   border: Border.all(
+            //                     width: 2,
+            //                     color: primary
+            //                         //: Colors.transparent,
+            //                   ),
+            //                   borderRadius: BorderRadius.circular(5)),
+            //             ),
+            //           ),
+            //         );
+            //       }))),
+            //     ],
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: 20,
+            // ),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Row(

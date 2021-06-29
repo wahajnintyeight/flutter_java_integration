@@ -16,6 +16,8 @@ import 'home.dart';
 import 'package:counter_flutter/Screens/Home/theme/colors.dart';
 import 'home.dart';
 import 'package:counter_flutter/Screens/Home/productdetail.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -36,6 +38,25 @@ class MainPageCus extends StatefulWidget {
 class _MainPageCusState extends State<MainPageCus> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  static const platform =
+      const MethodChannel('../../../com/example/courtcounter/');
+
+  Future<void> _getDataFromAdnroid() async {
+    String _dataFromFlutter = "Android can ping you";
+    print("calling for data");
+    String data;
+    try {
+      final String result = await platform.invokeMethod(
+          'test', {"data": "Call me flutter"}); //sending data from flutter here
+      data = result;
+    } on PlatformException catch (e) {
+      data = "Android is not responding please check the code";
+    }
+
+    setState(() {
+      _dataFromFlutter = data;
+    });
+  }
 
   List<JewelryType> JT;
 
@@ -57,184 +78,178 @@ class _MainPageCusState extends State<MainPageCus> {
           leading: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () =>
-              // Navigator.push(context, MaterialPageRoute(builder: (context) {
-              //   return CusHome();
-              // })),
-              Navigator.pop(context)
-          ),
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  //   return CusHome();
+                  // })),
+                  Navigator.pop(context)),
           title: Text("Shop 'N' Preview"),
           centerTitle: true,
         ),
         body: SafeArea(
-      child: ListView(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "Viewing $jName with ID: $ID",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-                ),
-                Row(
+          child: ListView(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Icon(LineIcons.search),
-                    SizedBox(
-                      width: 15,
+                    Text(
+                      "Viewing $jName with ID: $ID",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
                     ),
-                    Icon(LineIcons.shoppingCart)
+                    Row(
+                      children: <Widget>[
+                        Icon(LineIcons.search),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Icon(LineIcons.shoppingCart)
+                      ],
+                    )
                   ],
-                )
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 20, left: 20),
-              // child: Row(
-              //     children: List.generate(menuItems.length, (index) {
-              //   return Padding(
-              //     padding: const EdgeInsets.only(right: 20),
-              //     child: InkWell(
-              //       onTap: () {
-              //         setState(() {
-              //           activeMenu = index;
-              //         });
-              //       },
-              //       child: Container(
-              //         decoration: BoxDecoration(
-              //             border: Border(
-              //                 bottom: BorderSide(
-              //                     color: activeMenu == index
-              //                         ? primary
-              //                         : Colors.transparent,
-              //                     width: 2))),
-              //         child: Padding(
-              //           padding: const EdgeInsets.all(8.0),
-              //           child: Text(
-              //             menuItems[index],
-              //             style: TextStyle(fontSize: 17),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   );
-              // })),
-            ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Container(
-              child: Container(
-                  child: FutureBuilder(
-            future: DBFuture().returnEarrings(),
-            builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-              if (!snapshot.hasData) {
-                return Container(width: 50.0, height: 50.0);
-              } else {
-                print(snapshot.data.length);
-                return Container(
-                  child: ListView.builder(
-                      itemCount: snapshot.data.length,
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index)
-                      {
-                        if (snapshot.data[index]["type"] == jName)
-                        {
-                          print(snapshot.data[index]["name"]);
-                       // return Text(snapshot.data[index]["name"]);
-                          return InkWell(
-                            onTap: ()
-                            {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => ProductDetailPage(
-                                            id: dataItems[index]['id']
-                                                .toString(),
-                                            name: dataItems[index]['name'],
-                                            code: dataItems[index]['code'],
-                                            img: dataItems[index]['img'],
-                                            price: dataItems[index]['price']
-                                                .toString(),
-                                            promotionPrice: dataItems[index]
-                                                    ['promotionPrice']
-                                                .toString(),
-                                            size: dataItems[index]['size'],
-                                            color: dataItems[index]['color'],
-                                          )));
-                            },
-                            child: Card(
-                                elevation: 2,
-                                child: Column(
-                                  // crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Hero(
-                                      tag: snapshot.data[index]["name"]
-                                          .toString(),
-                                      child: Container(
-                                        width: (size.width - 16) / 2,
-                                        height: (size.width - 16) / 2,
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: NetworkImage(snapshot
-                                                    .data[index]["thumbnail"]),
-                                                fit: BoxFit.cover)),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 15),
-                                      child: Text(
-                                        snapshot.data[index]["name"],
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 15),
-                                      child: Text(
-                                        "Rs. " + snapshot.data[index]["price"]
-                                                .toString() +
-                                            "/.",
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                  ],
-                                )),
-                          );
-                        }
-                        else {
-                          print("THIS WORKS!!!");
-                          return Container(width: 0.0, height: 0.0);
-                        }
-                      }),
-                );
-              }
-              //    );
-            },
-          ))
-              //List.generate(dataItems.length, (index)
-              //{
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20, left: 20),
+                  // child: Row(
+                  //     children: List.generate(menuItems.length, (index) {
+                  //   return Padding(
+                  //     padding: const EdgeInsets.only(right: 20),
+                  //     child: InkWell(
+                  //       onTap: () {
+                  //         setState(() {
+                  //           activeMenu = index;
+                  //         });
+                  //       },
+                  //       child: Container(
+                  //         decoration: BoxDecoration(
+                  //             border: Border(
+                  //                 bottom: BorderSide(
+                  //                     color: activeMenu == index
+                  //                         ? primary
+                  //                         : Colors.transparent,
+                  //                     width: 2))),
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.all(8.0),
+                  //           child: Text(
+                  //             menuItems[index],
+                  //             style: TextStyle(fontSize: 17),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   );
+                  // })),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Container(
+                  child: Container(
+                      child: FutureBuilder(
+                future: DBFuture().returnEarrings(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<dynamic>> snapshot) {
+                  if (!snapshot.hasData) {
+                    return Container(width: 50.0, height: 50.0);
+                  } else {
+                    print(snapshot.data.length);
+                    return Container(
+                      child: ListView.builder(
+                          itemCount: snapshot.data.length,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (snapshot.data[index]["type"] == jName) {
+                              print(snapshot.data[index]["name"]);
+                              // return Text(snapshot.data[index]["name"]);
+                              return InkWell(
+                                onTap: () {
+                                  print(snapshot.data[index]['thumbnail']);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => ProductDetailPage(
+                                                name: snapshot.data[index]["name"],//  dataItems[index]['name'],
+                                                img: snapshot.data[index]['thumbnail'],
+                                                price: snapshot.data[index]["price"],// dataItems[index]['price'].toString(),
+                                                type: snapshot.data[index]['type'],
+                                              )));
+                                },
+                                child: Card(
+                                    elevation: 2,
+                                    child: Column(
+                                      // crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Hero(
+                                          tag: snapshot.data[index]["name"]
+                                              .toString(),
+                                          child: Container(
+                                            width: (size.width - 16) / 2,
+                                            height: (size.width - 16) / 2,
+                                            decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: NetworkImage(
+                                                        snapshot.data[index]
+                                                            ["thumbnail"]),
+                                                    fit: BoxFit.cover)),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 15),
+                                          child: Text(
+                                            snapshot.data[index]["name"],
+                                            style: TextStyle(fontSize: 16),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 15),
+                                          child: Text(
+                                            "Rs. " +
+                                                snapshot.data[index]["price"]
+                                                    .toString() +
+                                                "/.",
+                                            style: TextStyle(fontSize: 16),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                      ],
+                                    )),
+                              );
+                            } else {
+                              print("THIS WORKS!!!");
+                              return Container(width: 0.0, height: 0.0);
+                            }
+                          }),
+                    );
+                  }
+                  //    );
+                },
+              ))
+                  //List.generate(dataItems.length, (index)
+                  //{
 
-              //   }
-              //    ),
-              )
-        ],
-      ),
-    ));
+                  //   }
+                  //    ),
+                  )
+            ],
+          ),
+        ));
   }
 }

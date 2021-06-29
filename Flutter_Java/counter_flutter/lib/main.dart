@@ -22,8 +22,6 @@ Widget chooseWidget(String route) {
 }
 
 
-
-
 class MyFlutterActivity extends StatefulWidget {
   @override
   _MyFlutterActivityState createState() => _MyFlutterActivityState();
