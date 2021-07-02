@@ -152,29 +152,67 @@ class _CusHomeState extends State<CusHome> {
                       ),
                     )),
                 new Container(
+                    color: Colors.white70,
                     child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 20),
-                    ListTile(
-                      leading: Icon(Icons.message),
-                      title: Text('Profile'),
-                    ),
-                    SizedBox(height: 20),
-                    ListTile(
-                      leading: Icon(Icons.account_circle),
-                      title: Text('Settings'),
-                    ),
-                    SizedBox(height: 20),
-                    RaisedButton(
-                      child: ListTile(
-                          leading: Icon(Icons.settings),
-                          title: Text('Log Out'),
-                          onTap: () {
-                            _signOut(context);
-                          }),
-                    )
-                  ],
-                )),
+                      children: <Widget>[
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.green,
+                            primary: Colors.green,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 20),
+                          ),
+                          child: ListTile(
+                            leading: Icon(Icons.message),
+                            title: Text('Profile'),
+                            onTap: () {},
+                          ),
+                        ),
+                        // SizedBox(height: 20),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.green,
+                            primary: Colors.green,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 20),
+                          ),
+                          child: ListTile(
+                              leading: Icon(Icons.account_circle),
+                              title: Text('Settings'),
+                              onTap: () {
+                                // _signOut(context);
+                              }),
+                        ),
+                        // SizedBox(height: 20),
+                        ElevatedButton(
+                          child: ListTile(
+                              leading: Icon(Icons.shopping_cart),
+                              title: Text('My Cart'),
+                              onTap: () {
+                                _signOut(context);
+                              }),
+                          style: ElevatedButton.styleFrom(
+                            shadowColor: Colors.green,
+                            primary: Colors.green,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 20),
+                          ),
+                        ),
+                        // SizedBox(height: 20),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 20),
+                          ),
+                          child: ListTile(
+                              leading: Icon(Icons.settings),
+                              title: Text('Log Out'),
+                              onTap: () {
+                                _signOut(context);
+                              }),
+                        ),
+                      ],
+                    )),
               ],
             ),
           ),

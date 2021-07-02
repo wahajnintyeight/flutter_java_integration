@@ -38,25 +38,6 @@ class MainPageCus extends StatefulWidget {
 class _MainPageCusState extends State<MainPageCus> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  static const platform =
-      const MethodChannel('../../../com/example/courtcounter/');
-
-  Future<void> _getDataFromAdnroid() async {
-    String _dataFromFlutter = "Android can ping you";
-    print("calling for data");
-    String data;
-    try {
-      final String result = await platform.invokeMethod(
-          'test', {"data": "Call me flutter"}); //sending data from flutter here
-      data = result;
-    } on PlatformException catch (e) {
-      data = "Android is not responding please check the code";
-    }
-
-    setState(() {
-      _dataFromFlutter = data;
-    });
-  }
 
   List<JewelryType> JT;
 
@@ -94,7 +75,7 @@ class _MainPageCusState extends State<MainPageCus> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Viewing $jName with ID: $ID",
+                      "Viewing $jName Earrings",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
                     ),
@@ -163,6 +144,7 @@ class _MainPageCusState extends State<MainPageCus> {
                     print(snapshot.data.length);
                     return Container(
                       child: ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
                           itemCount: snapshot.data.length,
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {

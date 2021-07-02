@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         CustomArFragment arFragment = (CustomArFragment) getSupportFragmentManager().findFragmentById(R.id.arFragment);
         ModelRenderable.builder()
-                .setSource(this, R.raw.earrings1)
+                .setSource(this, R.raw.circularshaped)
                 .build()
                 .thenAccept(modelRenderable -> {
                     this.modelRenderable = modelRenderable;
@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         arFragment.getArSceneView().setCameraStreamRenderPriority(Renderable.RENDER_PRIORITY_FIRST);
-
         arFragment.getArSceneView().getScene().addOnUpdateListener(frameTime -> {
             if (modelRenderable == null || texture == null)
                 return;
@@ -86,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
 
         //DO NOT MESS WITH THIS

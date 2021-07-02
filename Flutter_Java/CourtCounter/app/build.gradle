@@ -2,10 +2,10 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'com.google.ar.sceneform.plugin'
 
-sceneform.asset('sampledata/earrings1.obj', // 'Source Asset Path' specified during import.
+sceneform.asset('sampledata/circularshaped.fbx', // 'Source Asset Path' specified during import.
         'default',                            // 'Material Path' specified during import.
-        'sampledata/earrings1.sfa',         // '.sfa Output Path' specified during import.
-        'src/main/res/raw/earrings1');
+        'sampledata/circularshaped.sfa',         // '.sfa Output Path' specified during import.
+        'src/main/res/raw/circularshaped');
 
 android {
     compileSdkVersion 29
@@ -15,7 +15,7 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
-
+0
     dataBinding {
         enabled = true
     }

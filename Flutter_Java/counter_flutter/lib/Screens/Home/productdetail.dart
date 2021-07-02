@@ -1,6 +1,8 @@
 import 'package:line_icons/line_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_flutter/Screens/Home/theme/colors.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ProductDetailPage extends StatefulWidget {
   //final String id;
@@ -31,15 +33,37 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage> {
   int activeSize = 0;
   int activeColor = 0;
-  String activeImg = '';
+  String activeImg = '';  int modelPrice;
   int qty = 1;
+
+  static const platform =
+      const MethodChannel('com.example.courtcounter/Activity.java');
+
+  Future<void> _getDataFromAdnroid() async {
+    String _dataFromFlutter = "Android can ping you";
+    print("calling for data");
+    String data;
+    try {
+      final String result = await platform.invokeMethod(
+          'test', {"data": "Call me flutter"}); //sending data from flutter here
+      data = result;
+    } on PlatformException catch (e) {
+      data = "Android is not responding please check the code";
+    }
+
+    setState(() {
+      _dataFromFlutter = data;
+    });
+  }
 
   @override
   void initState() {
+   // = price;
     // TODO: implement initState
     super.initState();
     setState(() {
       activeImg = widget.img;
+      modelPrice = widget.price;
     });
   }
 
@@ -49,6 +73,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       body: getBody(),
       bottomSheet: getBottom(),
     );
+  }
+
+
+
+  void multiplyPrice(int qty) {
+   modelPrice = qty * widget.price;
   }
 
   Widget getBottom() {
@@ -63,6 +93,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               height: 100,
               minWidth: 200,
               onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Item has been added to Cart!"),
+                    duration: Duration(seconds: 3),
+                  ),
+                );
                 // your add cart here
               },
               child: Row(
@@ -77,10 +113,17 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             height: 20,
           ),
           FlatButton(
-            height: 100,
+              height: 100,
               minWidth: 192,
               color: primary,
               onPressed: () {
+                // _getDataFromAdnroid();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Front-Facing Camera will open in a moment."),
+                    duration: Duration(seconds: 4),
+                  ),
+                );
                 // your add cart here
               },
               child: Row(
@@ -199,7 +242,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         width: 20,
                       ),
                       Text(
-                        widget.price.toString() + " pkr",
+                       modelPrice.toString() + " pkr",
                         style: TextStyle(
                             fontSize: 20,
                             height: 1.5,
@@ -333,6 +376,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           if (qty > 1) {
                             setState(() {
                               qty = --qty;
+                              multiplyPrice(qty);
                             });
                           }
                         },
@@ -362,6 +406,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         onTap: () {
                           setState(() {
                             qty = ++qty;
+                            multiplyPrice(qty);
+
                           });
                         },
                         child: Container(
