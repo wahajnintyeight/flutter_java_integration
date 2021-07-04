@@ -33,27 +33,28 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage> {
   int activeSize = 0;
   int activeColor = 0;
-  String activeImg = '';  int modelPrice;
+  String activeImg = '';
+  int modelPrice;
   int qty = 1;
 
-  static const platform =
-      const MethodChannel('com.example.courtcounter/Activity.java');
+  static const platform = const
+  MethodChannel('going.native.for.userdata');
+  String _username = 'Data received: No data';
+  String _userId = '1111';
 
   Future<void> _getDataFromAdnroid() async {
-    String _dataFromFlutter = "Android can ping you";
-    print("calling for data");
-    String data;
+    String username;
     try {
-      final String result = await platform.invokeMethod(
-          'test', {"data": "Call me flutter"}); //sending data from flutter here
-      data = result;
+      final result = await platform.invokeMethod('launchApp2');
+      username = 'Data received: $result';
     } on PlatformException catch (e) {
-      data = "Android is not responding please check the code";
+      username = 'Data received: No data';
     }
 
     setState(() {
-      _dataFromFlutter = data;
+      _username = username;
     });
+
   }
 
   @override
@@ -117,13 +118,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               minWidth: 192,
               color: primary,
               onPressed: () {
-                // _getDataFromAdnroid();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text("Front-Facing Camera will open in a moment."),
-                    duration: Duration(seconds: 4),
-                  ),
-                );
+                 _getDataFromAdnroid();
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //   SnackBar(
+                //     content: Text("Front-Facing Camera will open in a moment."),
+                //     duration: Duration(seconds: 4),
+                //   ),
+                // );
                 // your add cart here
               },
               child: Row(

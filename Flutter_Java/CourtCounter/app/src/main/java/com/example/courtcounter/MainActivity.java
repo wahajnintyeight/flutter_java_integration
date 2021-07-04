@@ -7,7 +7,7 @@ import android.R.xml;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Bundle;
-
+import io.flutter.embedding.engine.FlutterEngine;
 import com.example.android.courtcounter.R;
 import com.google.ar.core.AugmentedFace;
 import com.google.ar.core.Frame;
@@ -18,20 +18,23 @@ import com.google.ar.sceneform.rendering.Texture;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.AugmentedFaceNode;
 //import com.example.counter_flutter.R;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 //import androidx.appcompat.app.AppCompatActivity;
-import android.util.Log;
 import android.view.WindowManager;
 
 //package com.example.
 //import android.os.Bundle;
 import java.util.Collection;
 
+import io.flutter.Log;
 import io.flutter.embedding.android.FlutterActivity;
+import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugins.GeneratedPluginRegistrant;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends anotherOne {
 
 
     private ModelRenderable modelRenderable;
@@ -44,11 +47,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        // Defining the FlutterActivity to display
+        // the Flutter UI within this host app.
+        startActivity(
+                FlutterActivity
+                        .withNewEngine()
+                        .initialRoute("splashRoute")
+                        .build(this)
+        );
+
+
+
         setContentView(R.layout.activity_main);
 
         CustomArFragment arFragment = (CustomArFragment) getSupportFragmentManager().findFragmentById(R.id.arFragment);
         ModelRenderable.builder()
-                .setSource(this, R.raw.circularshaped)
+                .setSource(this, R.raw.ringearrings)
                 .build()
                 .thenAccept(modelRenderable -> {
                     this.modelRenderable = modelRenderable;

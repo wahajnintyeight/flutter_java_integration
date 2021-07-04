@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'com.google.ar.sceneform.plugin'
-
-sceneform.asset('sampledata/circularshaped.fbx', // 'Source Asset Path' specified during import.
-        'default',                            // 'Material Path' specified during import.
-        'sampledata/circularshaped.sfa',         // '.sfa Output Path' specified during import.
-        'src/main/res/raw/circularshaped');
+apply plugin: 'com.google.gms.google-services'
+//sceneform.asset('sampledata/circularshaped.fbx', // 'Source Asset Path' specified during import.
+//        'default',                            // 'Material Path' specified during import.
+//        'sampledata/circularshaped.sfa',         // '.sfa Output Path' specified during import.
+//        'src/main/res/raw/circularshaped');
 
 android {
     compileSdkVersion 29
@@ -60,7 +60,7 @@ dependencies {
     implementation 'com.google.ar.sceneform:assets:1.12.0'
     implementation 'com.google.android.gms:play-services-location:17.1.0'
 
-
+    implementation platform('com.google.firebase:firebase-bom:28.2.0')
 
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation project(':flutter')
